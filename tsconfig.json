@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "noEmit": true, // Не создавать выходные файлы компилятора, например исходный код JavaScript. Для нас это делает Babel
+    "allowJs": true, // Разрешите импорт файлов .js, а не только файлы .ts и .tsx
+    "sourceMap": true, // Включает создание файлов исходной карты. Эти файлы позволяют отладчикам и другим инструментам отображать исходный код
+    "strict": true, // Флаг strict включает широкий диапазон действий при проверке типов, что повышает надежность проверки типов
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "module": "es6",
+    "target": "es6",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*"], // Какие файлы включены в проверку
+  "exclude": ["node_modules"] // Какие файлы исключены
+}

@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
 
 const srcPath = path.resolve(__dirname, 'src');
 const buildPath = path.resolve(__dirname, 'dist');
@@ -33,7 +34,7 @@ const getSettingsForStyles = (withModules = false) => {
 };
 
 module.exports = {
-  entry: path.join(srcPath, 'index.js'),
+  entry: path.join(srcPath, 'index.tsx'),
   target: !isProd ? 'web' : 'browserslist',
   output: {
     path: buildPath,
@@ -47,6 +48,7 @@ module.exports = {
     isProd && new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
     }),
+    new TsCheckerPlugin()
   ].filter(Boolean),
   module: {
     rules: [
@@ -60,7 +62,7 @@ module.exports = {
         use: getSettingsForStyles(),
       },
       {
-        test: /\.jsx?$/,
+        test: /\.[tj]sx?$/,
         use: 'babel-loader'
       },
       {
