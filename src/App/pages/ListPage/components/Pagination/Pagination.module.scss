@@ -1,0 +1,39 @@
+@import "styles/variables";
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & .button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 14px;
+    border: none;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: $text-primary;
+    background-color: transparent;
+    cursor: pointer;
+
+    &.active {
+      color: $button-primary-text;
+      background-color: $button-primary-bg;
+    }
+
+    &:not(.active):not(:disabled):hover {
+      color: $text-accent;
+
+      & svg {
+        color: $text-accent;
+      }
+    }
+
+    &:disabled svg {
+      color: $text-secondary;
+    }
+  }
+}

@@ -1,0 +1,194 @@
+import axios from "axios";
+import {
+  IReactionDisposer,
+  action,
+  computed,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction,
+} from "mobx";
+import { Meta } from "utils/meta";
+import { getReposListParams } from "./types";
+import { RepoListItemModel, normalizeRepoListItem } from "store/models/github";
+import {
+  CollectionModel,
+  getInitialCollectionModel,
+  linearizeCollection,
+  normalizeCollection,
+} from "store/models/shared/collection";
+import rootStore from "store/RootStore";
+import { ILocalStore } from "utils/useLocalStore";
+
+import { GITHUB_API_TOKEN } from "config/github";
+
+type PrivateFields =
+  | "_repos"
+  | "_current"
+  | "_total"
+  | "_per_page"
+  | "_orgsName"
+  | "_type"
+  | "_meta";
+
+class ReposStore implements ILocalStore {
+  private _repos: CollectionModel<number, RepoListItemModel> =
+    getInitialCollectionModel();
+  private _current: number = 1;
+  private _total: number = 0;
+  private _per_page: number = 9;
+  private _orgsName: string = "";
+  private _type: string = "all";
+  private _meta: Meta = Meta.initial;
+
+  constructor() {
+    makeObservable<ReposStore, PrivateFields>(this, {
+      _repos: observable.ref,
+      _current: observable,
+      _total: observable,
+      _per_page: observable,
+      _orgsName: observable,
+      _type: observable,
+      _meta: observable,
+      repos: computed,
+      current: computed,
+      total: computed,
+      orgsName: computed,
+      isNoResultsVisible: computed,
+      isPaginationVisible: computed,
+      meta: computed,
+      setType: action,
+      setCurrentPage: action,
+      setOrgsName: action,
+      getReposList: action,
+      destroy: action,
+    });
+  }
+
+  get repos(): RepoListItemModel[] {
+    return linearizeCollection(this._repos);
+  }
+
+  get current(): number {
+    return this._current;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get orgsName(): string {
+    return this._orgsName;
+  }
+
+  get type(): string {
+    return this._type;
+  }
+
+  get isNoResultsVisible(): boolean {
+    return this.repos.length === 0;
+  }
+
+  get isPaginationVisible(): boolean {
+    return this._total > 0 && this._total > this._per_page;
+  }
+
+  get meta(): Meta {
+    return this._meta;
+  }
+
+  setType = (type: string) => {
+    this._type = type;
+  };
+
+  setCurrentPage = (pageNumber: number) => {
+    this._current = pageNumber;
+  };
+
+  setOrgsName = (name: string) => {
+    this._orgsName = name;
+  };
+
+  getReposList = async (params: getReposListParams): Promise<void> => {
+    if (this._meta === Meta.loading) return;
+
+    this._meta = Meta.loading;
+    this._repos = getInitialCollectionModel();
+
+    const response = await axios.get(
+      `https://api.github.com/orgs/${params.name}/repos`,
+      {
+        headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
+        params: {
+          type: params.type,
+          page: params.page,
+          per_page: this._per_page,
+        },
+      },
+    );
+
+    runInAction(() => {
+      if (response.status !== 200) {
+        this._meta = Meta.error;
+      }
+
+      const headersLink = response.headers.link;
+      if (headersLink) {
+        const match = headersLink.match(
+          /(?<=[?&])page=(\d+)(?=[^>]*>; rel="last")/,
+        );
+
+        if (match && match[1]) {
+          this._total = parseInt(match[1]);
+        }
+      } else {
+        this._total = 0;
+        this._current = 1;
+      }
+
+      try {
+        this._meta = Meta.success;
+        const repos: RepoListItemModel[] = [];
+
+        for (const item of response.data) {
+          repos.push(normalizeRepoListItem(item));
+        }
+
+        this._repos = normalizeCollection(repos, (item) => item.id);
+      } catch (error) {
+        console.log(error);
+        this._meta = Meta.error;
+        this._repos = getInitialCollectionModel();
+      }
+    });
+  };
+
+  private readonly _qpReaction: IReactionDisposer = reaction(
+    () => ({
+      search: rootStore.query.getParams("search"),
+      type: rootStore.query.getParams("type"),
+      page: rootStore.query.getParams("page") || 1,
+    }),
+    ({ search, type, page }) => {
+      const repoName = (search || "").toString();
+      const currentPage = parseInt(page as string, 10) || 1;
+      const repoType = (type || "all").toString();
+
+      search && this.setOrgsName(repoName);
+      type && this.setType(repoType);
+      page && this.setCurrentPage(currentPage);
+
+      // this.getReposList({
+      //   name: repoName,
+      //   type: repoType,
+      //   page: currentPage.toString(),
+      // });
+    },
+  );
+
+  destroy = () => {
+    this._qpReaction();
+  };
+}
+
+export default ReposStore;

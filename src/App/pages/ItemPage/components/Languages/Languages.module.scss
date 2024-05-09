@@ -1,0 +1,69 @@
+@import "styles/variables";
+
+.languages {
+  width: 434px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-xxs;
+
+  & .title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: $black;
+  }
+
+  & .progress {
+    display: flex;
+    gap: 2px;
+    width: 273px;
+    height: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  & .progressItem {
+    height: 10px;
+  }
+
+  & .list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  & .item {
+    flex: 1 0 50%;
+    display: flex;
+    align-items: center;
+    gap: $space-xxs;
+    padding: 4px 0;
+  }
+
+  & .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  & .lang {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $black;
+  }
+
+  & .percentage {
+    display: inline-block;
+    vertical-align: middle;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: $text-secondary;
+  }
+}

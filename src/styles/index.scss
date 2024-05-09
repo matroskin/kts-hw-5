@@ -1,0 +1,51 @@
+@import "./fonts.scss";
+@import "./variables.scss";
+@import "./github-lang-colors.scss";
+
+html,
+body {
+  font-family: "Roboto";
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+figure,
+pre {
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+.content {
+  padding: 0 $space-xl;
+  width: 1285px;
+}
+
+.page {
+  padding: $space-xl 0;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}

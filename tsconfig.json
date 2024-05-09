@@ -6,7 +6,8 @@
       "@config/*": ["src/config/*"],
       "@styles/*": ["src/styles/*"],
       "@utils/*": ["src/utils/*"],
-      "@models/*": ["src/models/*"]
+      "@models/*": ["src/models/*"],
+      "@store/*": ["src/models/*"]
     },
     "noEmit": true,
     "allowJs": true,

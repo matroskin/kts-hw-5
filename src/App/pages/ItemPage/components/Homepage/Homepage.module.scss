@@ -1,0 +1,17 @@
+@import "styles/variables";
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: $space-xxs;
+
+  & a {
+    color: $link-color;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  & a:hover {
+    text-decoration: underline;
+  }
+}

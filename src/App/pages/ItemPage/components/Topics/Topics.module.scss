@@ -1,0 +1,31 @@
+@import "styles/variables";
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-xxs;
+  align-items: center;
+
+  & .topic {
+    display: flex;
+    padding: 4px 16px;
+    gap: 10px;
+    background: $topic-bg;
+    border-radius: 20px;
+
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: $topic-color;
+
+    text-decoration: none;
+
+    &:hover {
+      color: $white;
+      background: $topic-bg-hover;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@import "styles/variables";
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: $space-l;
+
+  & .content {
+    display: flex;
+    gap: 80px;
+  }
+}

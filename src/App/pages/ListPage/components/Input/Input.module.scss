@@ -1,0 +1,43 @@
+@import "styles/variables";
+
+.wrapper {
+  position: relative;
+  min-width: 300px;
+  width: 100%;
+  height: 52px;
+}
+
+.input {
+  font-size: 16px;
+  line-height: 20px;
+
+  padding: $space-s $space-xs;
+  gap: $space-xxs;
+
+  width: 100%;
+  height: 52px;
+  border-radius: $border-radius;
+
+  color: $input-text;
+  background-color: $input-bg;
+  border: 1px solid $input-border;
+
+  &:focus {
+    outline: none;
+    color: $input-text-focus;
+    background-color: $input-bg-focus;
+    border: 1px solid $input-border-focus;
+  }
+
+  &:disabled {
+    color: $input-text-disabled;
+    background-color: $input-bg-disabled;
+    border: 1px solid $input-border-disabled;
+  }
+}
+
+.inputAfterSlot {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}

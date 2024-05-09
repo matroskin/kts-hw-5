@@ -1,0 +1,28 @@
+@import "styles/variables";
+
+.title {
+  margin-bottom: $space-m;
+  display: flex;
+  align-items: center;
+  gap: $space-m;
+
+  & .link {
+    svg {
+      display: block;
+      color: $brand;
+    }
+
+    &:hover {
+      svg {
+        color: $brand-hover;
+      }
+    }
+  }
+
+  & .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background-size: cover;
+  }
+}

@@ -1,0 +1,23 @@
+@import "styles/variables";
+
+.readme {
+  border: 1px solid $gray;
+  border-radius: 4px;
+  position: relative;
+
+  & .title {
+    padding: 16px;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    color: $black;
+  }
+
+  & .content {
+    padding: 32px;
+
+    & > * {
+      margin-bottom: $space-xs;
+    }
+  }
+}
