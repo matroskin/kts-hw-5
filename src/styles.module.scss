@@ -2,5 +2,12 @@ $color: blue;
 
 .title {
   color: $color;
-  transform: scale(0.75);
+}
+
+.picture {
+  width: 200px;
+  height: 140px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
