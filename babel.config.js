@@ -1,5 +1,3 @@
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-
 module.exports = api => {
   api.cache.using(() => process.env.NODE_ENV);
 

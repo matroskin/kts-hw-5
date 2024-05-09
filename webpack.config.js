@@ -1,11 +1,36 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const srcPath = path.resolve(__dirname, 'src');
 const buildPath = path.resolve(__dirname, 'dist');
 
 const isProd = process.env.NODE_ENV === 'production';
+
+const getSettingsForStyles = (withModules = false) => {
+  return [
+    isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+    !withModules ? 'css-loader' : {
+      loader: 'css-loader',
+      options: {
+        modules: {
+          localIdentName: !isProd ? '[path][name]__[local]' : '[hash:base64]'
+        },
+        esModule: false
+      }
+    },
+    {
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: ['autoprefixer'],
+        }
+      }
+    },
+    'sass-loader',
+  ];
+};
 
 module.exports = {
   entry: path.join(srcPath, 'index.js'),
@@ -18,16 +43,24 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.join(srcPath, 'index.html')
     }),
-    !isProd && new ReactRefreshWebpackPlugin()
+    !isProd && new ReactRefreshWebpackPlugin(),
+    isProd && new MiniCssExtractPlugin({
+      filename: '[name]-[hash].css',
+    }),
   ].filter(Boolean),
   module: {
     rules: [
       {
-        test: /\.css/,
-        use: ['style-loader','css-loader']
+        test: /\.module\.s?css$/,
+        use: getSettingsForStyles(true),
       },
       {
-        test: /\.jsx?/,
+        test: /\.s?css$/,
+        exclude: /\.module\.s?css$/,
+        use: getSettingsForStyles(),
+      },
+      {
+        test: /\.jsx?$/,
         use: 'babel-loader'
       }
     ]
