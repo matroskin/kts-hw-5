@@ -9,7 +9,6 @@ const App = () => {
   useQueryParamsStoreInit();
 
   return (
-    // <BrowserRouter>
     <>
       <Header />
       <Routes>
@@ -18,7 +17,6 @@ const App = () => {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
-    // </BrowserRouter>
   );
 };
 

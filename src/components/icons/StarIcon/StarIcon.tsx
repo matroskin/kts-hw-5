@@ -1,5 +1,4 @@
 import React from 'react';
-// import { IconProps } from '../Icon';
 
 type IconProps = React.SVGAttributes<SVGElement> & {
   className?: string;
