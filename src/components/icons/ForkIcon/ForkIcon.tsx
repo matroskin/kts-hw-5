@@ -18,4 +18,4 @@ const ForkIcon: React.FC<IconProps> = ({ width = 16, height = 16, color = 'prima
   );
 };
 
-export default ForkIcon;
+export default React.memo(ForkIcon);

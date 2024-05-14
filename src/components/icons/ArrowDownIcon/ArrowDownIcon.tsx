@@ -24,4 +24,4 @@ const ArrowDownIcon: React.FC<IconProps> = ({
   </svg>
 );
 
-export default ArrowDownIcon;
+export default React.memo(ArrowDownIcon);

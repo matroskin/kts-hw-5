@@ -22,4 +22,4 @@ const Button: React.FC<ButtonProps> = ({ loading, children, className, onMouseOv
     </button>
   );
 };
-export default Button;
+export default React.memo(Button);

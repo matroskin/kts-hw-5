@@ -22,4 +22,4 @@ const LinkIcon: React.FC<IconProps> = ({ width = 16, height = 17, color = 'prima
   );
 };
 
-export default LinkIcon;
+export default React.memo(LinkIcon);

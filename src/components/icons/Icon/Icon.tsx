@@ -7,4 +7,4 @@ export type IconProps = React.SVGAttributes<SVGElement> & {
 
 const Icon: React.FC<React.PropsWithChildren<IconProps>> = () => null
 
-export default Icon;
+export default React.memo(Icon);

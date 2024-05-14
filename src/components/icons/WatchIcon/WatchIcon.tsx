@@ -19,4 +19,4 @@ const WatchIcon: React.FC<IconProps> = ({ width = 16, height = 16, color = 'prim
   );
 };
 
-export default WatchIcon;
+export default React.memo(WatchIcon);

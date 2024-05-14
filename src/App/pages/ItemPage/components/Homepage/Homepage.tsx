@@ -19,4 +19,4 @@ const Homepage: React.FC<HomepageProps> = ({ homepage }) => {
   );
 };
 
-export default Homepage;
+export default React.memo(Homepage);

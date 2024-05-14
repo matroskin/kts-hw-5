@@ -30,4 +30,4 @@ const ArrowIcon: React.FC<ArrowIconProps> = ({ width = 32, height = 32, directio
   );
 };
 
-export default ArrowIcon;
+export default React.memo(ArrowIcon);

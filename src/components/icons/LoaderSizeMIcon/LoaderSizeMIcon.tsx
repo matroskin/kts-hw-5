@@ -18,4 +18,4 @@ const LoaderSizeMIcon: React.FC<IconProps> = ({ width = 48, height = 48, color =
   );
 };
 
-export default LoaderSizeMIcon;
+export default React.memo(LoaderSizeMIcon);

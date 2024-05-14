@@ -18,4 +18,4 @@ const LogoIcon: React.FC<IconProps> = ({ width = 32, height = 32, color = 'prima
   );
 };
 
-export default LogoIcon;
+export default React.memo(LogoIcon);

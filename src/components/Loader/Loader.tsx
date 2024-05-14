@@ -39,4 +39,4 @@ const Loader: React.FC<LoaderProps> = ({ size = 'l', className, color }) => {
   return svgContent;
 };
 
-export default Loader;
+export default React.memo(Loader);

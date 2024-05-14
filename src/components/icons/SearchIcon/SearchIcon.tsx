@@ -19,4 +19,4 @@ const SearchIcon: React.FC<IconProps> = ({ width = 24, height = 24, color = 'pri
   );
 };
 
-export default SearchIcon;
+export default React.memo(SearchIcon);

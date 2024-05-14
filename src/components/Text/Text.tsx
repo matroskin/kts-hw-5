@@ -41,4 +41,4 @@ const Text: React.FC<TextProps> = ({ className, view, tag: Tag = 'p', weight, ch
   );
 };
 
-export default Text;
+export default React.memo(Text);

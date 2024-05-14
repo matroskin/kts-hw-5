@@ -26,4 +26,4 @@ const StarIcon: React.FC<IconProps> = ({ width = 16, height = 16, color = 'prima
   );
 };
 
-export default StarIcon;
+export default React.memo(StarIcon);
