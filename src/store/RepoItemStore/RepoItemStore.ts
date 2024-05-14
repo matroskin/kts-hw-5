@@ -1,34 +1,50 @@
-import axios from 'axios';
-import { marked } from 'marked';
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { Meta } from 'utils/meta';
-import { getRepoItemParams } from './types';
-import { RepoItemModel, normalizeRepoItem, RepoContributorModel, normalizeRepoContributor } from 'store/models/github';
-import { ILocalStore } from 'utils/useLocalStore';
+import axios from "axios";
+import { marked } from "marked";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
+import { Meta } from "utils/meta";
+import { getRepoItemParams } from "./types";
+import {
+  RepoItemModel,
+  normalizeRepoItem,
+  RepoContributorModel,
+  normalizeRepoContributor,
+} from "store/models/github";
+import { ILocalStore } from "utils/useLocalStore";
 
-import { GITHUB_API_TOKEN } from 'config/github';
+import { GITHUB_API_TOKEN } from "config/github";
 
-type PrivateFields = '_repo' | '_contributors' | '_languages' | '_readme' | '_meta';
+type PrivateFields =
+  | "_repo"
+  | "_contributors"
+  | "_languages"
+  | "_readme"
+  | "_meta";
 
 class RepoItemStore implements ILocalStore {
   private _repo: RepoItemModel = {
     id: 0,
-    name: '',
-    homepage: '',
+    name: "",
+    homepage: "",
     topics: [],
     stargazersCount: 0,
     subscribersCount: 0,
     forksCount: 0,
     owner: {
       id: 0,
-      login: '',
-      avatarUrl: '',
-      htmlUrl: '',
+      login: "",
+      avatarUrl: "",
+      htmlUrl: "",
     },
   };
   private _contributors: RepoContributorModel[] = [];
   private _languages: { [key: string]: number } = {};
-  private _readme: string = '';
+  private _readme: string = "";
   private _meta: Meta = Meta.initial;
 
   constructor() {
@@ -71,25 +87,32 @@ class RepoItemStore implements ILocalStore {
     return this._meta;
   }
 
+  fetchRepoData = async (orgs: string, name: string): Promise<void> => {
+    await this.getRepoItem({ orgs, name });
+    await this.getRepoItemContributors({ orgs, name });
+    await this.getRepoItemLanguages({ orgs, name });
+    await this.getRepoItemReadme({ orgs, name });
+  };
+
   clearData = () => {
     this._repo = {
       id: 0,
-      name: '',
-      homepage: '',
+      name: "",
+      homepage: "",
       topics: [],
       stargazersCount: 0,
       subscribersCount: 0,
       forksCount: 0,
       owner: {
         id: 0,
-        login: '',
-        avatarUrl: '',
-        htmlUrl: '',
+        login: "",
+        avatarUrl: "",
+        htmlUrl: "",
       },
     };
     this._contributors = [];
     this._languages = {};
-    this._readme = '';
+    this._readme = "";
   };
 
   getRepoItem = async (params: getRepoItemParams): Promise<void> => {
@@ -98,9 +121,12 @@ class RepoItemStore implements ILocalStore {
     this._meta = Meta.loading;
     this.clearData();
 
-    const response = await axios.get(`https://api.github.com/repos/${params.orgs}/${params.name}`, {
-      headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
-    });
+    const response = await axios.get(
+      `https://api.github.com/repos/${params.orgs}/${params.name}`,
+      {
+        headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
+      },
+    );
 
     runInAction(() => {
       if (response.status !== 200) {
@@ -118,15 +144,20 @@ class RepoItemStore implements ILocalStore {
     });
   };
 
-  getRepoItemContributors = async (params: getRepoItemParams): Promise<void> => {
+  getRepoItemContributors = async (
+    params: getRepoItemParams,
+  ): Promise<void> => {
     if (this._meta === Meta.loading) return;
 
     this._meta = Meta.loading;
     this._contributors = [];
 
-    const response = await axios.get(`https://api.github.com/repos/${params.orgs}/${params.name}/contributors`, {
-      headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
-    });
+    const response = await axios.get(
+      `https://api.github.com/repos/${params.orgs}/${params.name}/contributors`,
+      {
+        headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
+      },
+    );
 
     runInAction(() => {
       if (response.status !== 200) {
@@ -156,9 +187,12 @@ class RepoItemStore implements ILocalStore {
     this._meta = Meta.loading;
     this._languages = {};
 
-    const response = await axios.get(`https://api.github.com/repos/${params.orgs}/${params.name}/languages`, {
-      headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
-    });
+    const response = await axios.get(
+      `https://api.github.com/repos/${params.orgs}/${params.name}/languages`,
+      {
+        headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
+      },
+    );
 
     runInAction(() => {
       if (response.status !== 200) {
@@ -180,14 +214,17 @@ class RepoItemStore implements ILocalStore {
     if (this._meta === Meta.loading) return;
 
     this._meta = Meta.loading;
-    this._readme = '';
+    this._readme = "";
 
-    const response = await axios.get(`https://api.github.com/repos/${params.orgs}/${params.name}/readme`, {
-      headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
-      params: {
-        access: 'application/vnd.github+json',
+    const response = await axios.get(
+      `https://api.github.com/repos/${params.orgs}/${params.name}/readme`,
+      {
+        headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
+        params: {
+          access: "application/vnd.github+json",
+        },
       },
-    });
+    );
 
     runInAction(async () => {
       if (response.status !== 200) {
@@ -203,7 +240,7 @@ class RepoItemStore implements ILocalStore {
         this._meta = Meta.success;
       } catch (error) {
         console.log(error);
-        this._readme = '';
+        this._readme = "";
         this._meta = Meta.error;
       }
     });

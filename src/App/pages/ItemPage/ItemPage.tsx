@@ -11,30 +11,14 @@ import Readme from "./components/Readme";
 import styles from "./ItemPage.module.scss";
 
 const ItemPage = () => {
-  const {
-    getRepoItem,
-    getRepoItemContributors,
-    getRepoItemLanguages,
-    getRepoItemReadme,
-    meta,
-    repo,
-    contributors,
-    languages,
-    readme,
-  } = useLocalStore(() => new RepoItemStore());
+  const { fetchRepoData, meta, repo, contributors, languages, readme } =
+    useLocalStore(() => new RepoItemStore());
 
-  const { orgs = "", name } = useParams<{ orgs: string; name: string }>();
+  const { orgs = "", name = "" } = useParams<{ orgs: string; name: string }>();
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getRepoItem({ orgs: orgs, name: name });
-      await getRepoItemContributors({ orgs: orgs, name: name });
-      await getRepoItemLanguages({ orgs: orgs, name: name });
-      await getRepoItemReadme({ orgs: orgs, name: name });
-    };
-
-    fetchData();
-  }, [name, orgs]);
+    fetchRepoData(orgs, name);
+  }, []);
 
   return (
     <div className="page">
