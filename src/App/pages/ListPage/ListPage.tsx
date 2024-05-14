@@ -20,7 +20,19 @@ import { OPTIONS } from "./config";
 const ListPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const reposStore = useLocalStore(() => new ReposStore());
+  const {
+    getReposList,
+    setOrgsName,
+    setType,
+    setCurrentPage,
+    orgsName,
+    meta,
+    repos,
+    isNoResultsVisible,
+    isPaginationVisible,
+    current,
+    total,
+  } = useLocalStore(() => new ReposStore());
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedValues, setSelectedValues] = useState<Option[]>([]);
@@ -30,7 +42,7 @@ const ListPage: React.FC = () => {
     if (!searchParam) {
       return;
     }
-    reposStore.getReposList({
+    getReposList({
       name: rootStore.query.getParams("search"),
       page: rootStore.query.getParams("page"),
       type: rootStore.query.getParams("type"),
@@ -43,22 +55,22 @@ const ListPage: React.FC = () => {
     const page = Number(searchParams.get("page"));
 
     if (search) {
-      reposStore.setOrgsName(search);
+      setOrgsName(search);
     }
 
     if (type) {
-      reposStore.setType(type);
+      setType(type);
       setSelectedValues(OPTIONS.filter((v) => type.includes(v.value)));
     }
 
     if (page) {
-      reposStore.setCurrentPage(page);
+      setCurrentPage(page);
     }
   }, []);
 
   const handleDropdownChange = useCallback((newValue: Option[]) => {
     setSelectedValues(newValue);
-    reposStore.setCurrentPage(1);
+    setCurrentPage(1);
   }, []);
 
   const handleClick = useCallback(
@@ -70,17 +82,17 @@ const ListPage: React.FC = () => {
 
   const handleSearch = () => {
     setSearchParams({
-      search: reposStore.orgsName,
+      search: orgsName,
       type: selectedValues.map((v) => v.value).join(",") || "all",
     });
   };
 
   const handlePageChange = useCallback(
     (pageNumber: number) => {
-      reposStore.setCurrentPage(pageNumber);
+      setCurrentPage(pageNumber);
       if (selectedValues.length) {
         const typeString = selectedValues.map((v) => v.value).join(",");
-        reposStore.setType(typeString);
+        setType(typeString);
       }
     },
     [selectedValues],
@@ -104,23 +116,23 @@ const ListPage: React.FC = () => {
 
         <form className={styles.search} onSubmit={(e) => e.preventDefault()}>
           <Input
-            value={reposStore.orgsName}
-            onChange={(e) => reposStore.setOrgsName(e)}
+            value={orgsName}
+            onChange={(e) => setOrgsName(e)}
             placeholder="Enter organization name"
           />
-          <Button onClick={handleSearch} disabled={!reposStore.orgsName}>
+          <Button onClick={handleSearch} disabled={!orgsName}>
             <SearchIcon />
           </Button>
         </form>
 
-        {reposStore.meta === Meta.loading ? (
+        {meta === Meta.loading ? (
           <div className={styles.loading}>
             <Loader color="accent" />
           </div>
         ) : (
           <>
             <div className={styles.list}>
-              {reposStore.repos.map((item) => (
+              {repos.map((item) => (
                 <Card
                   key={item.id}
                   image={item.owner.avatarUrl}
@@ -133,16 +145,16 @@ const ListPage: React.FC = () => {
               ))}
             </div>
 
-            {reposStore.isNoResultsVisible && (
+            {isNoResultsVisible && (
               <Text className="center" view="p-16" tag="p" color="secondary">
                 No results
               </Text>
             )}
 
-            {reposStore.isPaginationVisible && (
+            {isPaginationVisible && (
               <Pagination
-                currentPage={reposStore.current}
-                totalPages={reposStore.total}
+                currentPage={current}
+                totalPages={total}
                 onPageChange={handlePageChange}
               />
             )}

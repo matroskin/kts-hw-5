@@ -11,16 +11,26 @@ import Readme from "./components/Readme";
 import styles from "./ItemPage.module.scss";
 
 const ItemPage = () => {
-  const repoItemStore = useLocalStore(() => new RepoItemStore());
+  const {
+    getRepoItem,
+    getRepoItemContributors,
+    getRepoItemLanguages,
+    getRepoItemReadme,
+    meta,
+    repo,
+    contributors,
+    languages,
+    readme,
+  } = useLocalStore(() => new RepoItemStore());
 
   const { orgs = "", name } = useParams<{ orgs: string; name: string }>();
 
   useEffect(() => {
     const fetchData = async () => {
-      await repoItemStore.getRepoItem({ orgs: orgs, name: name });
-      await repoItemStore.getRepoItemContributors({ orgs: orgs, name: name });
-      await repoItemStore.getRepoItemLanguages({ orgs: orgs, name: name });
-      await repoItemStore.getRepoItemReadme({ orgs: orgs, name: name });
+      await getRepoItem({ orgs: orgs, name: name });
+      await getRepoItemContributors({ orgs: orgs, name: name });
+      await getRepoItemLanguages({ orgs: orgs, name: name });
+      await getRepoItemReadme({ orgs: orgs, name: name });
     };
 
     fetchData();
@@ -29,24 +39,20 @@ const ItemPage = () => {
   return (
     <div className="page">
       <div className="content">
-        {repoItemStore.meta === Meta.loading ? (
+        {meta === Meta.loading ? (
           <div className={styles.loading}>
             <Loader color="accent" />
           </div>
         ) : (
           <div className={styles.container}>
-            <Title
-              avatar={repoItemStore.repo.owner.avatarUrl}
-              orgs={orgs}
-              name={repoItemStore.repo.name}
-            />
+            <Title avatar={repo.owner.avatarUrl} orgs={orgs} name={repo.name} />
             <Info
-              data={repoItemStore.repo}
+              data={repo}
               orgs={orgs}
-              contributors={repoItemStore.contributors}
-              languages={repoItemStore.languages}
+              contributors={contributors}
+              languages={languages}
             />
-            {repoItemStore.readme && <Readme content={repoItemStore.readme} />}
+            {readme && <Readme content={readme} />}
           </div>
         )}
       </div>
