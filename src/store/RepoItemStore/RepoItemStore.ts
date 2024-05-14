@@ -27,21 +27,7 @@ type PrivateFields =
   | "_meta";
 
 class RepoItemStore implements ILocalStore {
-  private _repo: RepoItemModel = {
-    id: 0,
-    name: "",
-    homepage: "",
-    topics: [],
-    stargazersCount: 0,
-    subscribersCount: 0,
-    forksCount: 0,
-    owner: {
-      id: 0,
-      login: "",
-      avatarUrl: "",
-      htmlUrl: "",
-    },
-  };
+  private _repo: RepoItemModel | null = null;
   private _contributors: RepoContributorModel[] = [];
   private _languages: { [key: string]: number } = {};
   private _readme: string = "";
@@ -49,9 +35,9 @@ class RepoItemStore implements ILocalStore {
 
   constructor() {
     makeObservable<RepoItemStore, PrivateFields>(this, {
-      _repo: observable,
+      _repo: observable.ref,
       _contributors: observable,
-      _languages: observable,
+      _languages: observable.ref,
       _readme: observable,
       _meta: observable,
       repo: computed,
@@ -67,7 +53,7 @@ class RepoItemStore implements ILocalStore {
     });
   }
 
-  get repo(): RepoItemModel {
+  get repo(): RepoItemModel | null {
     return this._repo;
   }
 
@@ -95,21 +81,7 @@ class RepoItemStore implements ILocalStore {
   };
 
   clearData = () => {
-    this._repo = {
-      id: 0,
-      name: "",
-      homepage: "",
-      topics: [],
-      stargazersCount: 0,
-      subscribersCount: 0,
-      forksCount: 0,
-      owner: {
-        id: 0,
-        login: "",
-        avatarUrl: "",
-        htmlUrl: "",
-      },
-    };
+    this._repo = null;
     this._contributors = [];
     this._languages = {};
     this._readme = "";
@@ -246,9 +218,7 @@ class RepoItemStore implements ILocalStore {
     });
   };
 
-  destroy(): void {
-    this.clearData();
-  }
+  destroy(): void {}
 }
 
 export default RepoItemStore;

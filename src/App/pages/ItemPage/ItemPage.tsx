@@ -28,16 +28,22 @@ const ItemPage = () => {
             <Loader color="accent" />
           </div>
         ) : (
-          <div className={styles.container}>
-            <Title avatar={repo.owner.avatarUrl} orgs={orgs} name={repo.name} />
-            <Info
-              data={repo}
-              orgs={orgs}
-              contributors={contributors}
-              languages={languages}
-            />
-            {readme && <Readme content={readme} />}
-          </div>
+          repo && (
+            <div className={styles.container}>
+              <Title
+                avatar={repo.owner.avatarUrl}
+                orgs={orgs}
+                name={repo.name}
+              />
+              <Info
+                data={repo}
+                orgs={orgs}
+                contributors={contributors}
+                languages={languages}
+              />
+              {readme && <Readme content={readme} />}
+            </div>
+          )
         )}
       </div>
     </div>
