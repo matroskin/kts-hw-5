@@ -1,44 +1,26 @@
-import axios from "axios";
-import {
-  IReactionDisposer,
-  action,
-  computed,
-  makeObservable,
-  observable,
-  reaction,
-  runInAction,
-} from "mobx";
-import { Meta } from "utils/meta";
-import { getReposListParams } from "./types";
-import { RepoListItemModel, normalizeRepoListItem } from "store/models/github";
+import { IReactionDisposer, action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
+import { Meta } from 'utils/meta';
+import { getReposListParams } from './types';
+import { RepoListItemModel, normalizeRepoListItem } from 'store/models/github';
 import {
   CollectionModel,
   getInitialCollectionModel,
   linearizeCollection,
   normalizeCollection,
-} from "store/models/shared/collection";
-import rootStore from "store/RootStore";
-import { ILocalStore } from "utils/useLocalStore";
+} from 'store/models/shared/collection';
+import rootStore from 'store/RootStore';
+import { ILocalStore } from 'utils/useLocalStore';
+import ApiStore from 'store/ApiStore';
 
-import { GITHUB_API_TOKEN } from "config/github";
-
-type PrivateFields =
-  | "_repos"
-  | "_current"
-  | "_total"
-  | "_per_page"
-  | "_orgsName"
-  | "_type"
-  | "_meta";
+type PrivateFields = '_repos' | '_current' | '_total' | '_per_page' | '_orgsName' | '_type' | '_meta';
 
 class ReposStore implements ILocalStore {
-  private _repos: CollectionModel<number, RepoListItemModel> =
-    getInitialCollectionModel();
+  private _repos: CollectionModel<number, RepoListItemModel> = getInitialCollectionModel();
   private _current: number = 1;
   private _total: number = 0;
   private _per_page: number = 9;
-  private _orgsName: string = "";
-  private _type: string = "all";
+  private _orgsName: string = '';
+  private _type: string = 'all';
   private _meta: Meta = Meta.initial;
 
   constructor() {
@@ -115,17 +97,11 @@ class ReposStore implements ILocalStore {
     this._meta = Meta.loading;
     this._repos = getInitialCollectionModel();
 
-    const response = await axios.get(
-      `https://api.github.com/orgs/${params.name}/repos`,
-      {
-        headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
-        params: {
-          type: params.type,
-          page: params.page,
-          per_page: this._per_page,
-        },
-      },
-    );
+    const response = await ApiStore.get(`/orgs/${params.name}/repos`, {
+      type: params.type,
+      page: params.page,
+      per_page: this._per_page,
+    });
 
     runInAction(() => {
       if (response.status !== 200) {
@@ -134,9 +110,7 @@ class ReposStore implements ILocalStore {
 
       const headersLink = response.headers.link;
       if (headersLink) {
-        const match = headersLink.match(
-          /(?<=[?&])page=(\d+)(?=[^>]*>; rel="last")/,
-        );
+        const match = headersLink.match(/(?<=[?&])page=(\d+)(?=[^>]*>; rel="last")/);
 
         if (match && match[1]) {
           this._total = parseInt(match[1]);
@@ -165,14 +139,14 @@ class ReposStore implements ILocalStore {
 
   private readonly _qpReaction: IReactionDisposer = reaction(
     () => ({
-      search: rootStore.query.getParams("search"),
-      type: rootStore.query.getParams("type"),
-      page: rootStore.query.getParams("page") || 1,
+      search: rootStore.query.getParams('search'),
+      type: rootStore.query.getParams('type'),
+      page: rootStore.query.getParams('page') || 1,
     }),
     ({ search, type, page }) => {
-      const repoName = (search || "").toString();
+      const repoName = (search || '').toString();
       const currentPage = parseInt(page as string, 10) || 1;
-      const repoType = (type || "all").toString();
+      const repoType = (type || 'all').toString();
 
       search && this.setOrgsName(repoName);
       type && this.setType(repoType);
