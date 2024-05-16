@@ -114,7 +114,12 @@ class ReposStore implements ILocalStore {
       rootStore.query.setCurrentPage(page);
     }
 
-    if (!search) return;
+    if (!search) {
+      rootStore.query.setOrgsName('');
+      rootStore.query.setTypeRepos([{ key: 'all', value: 'all' }]);
+      rootStore.query.setCurrentPage(1);
+      return;
+    }
 
     await this.getReposList({
       name: rootStore.query.getParams('orgs'),

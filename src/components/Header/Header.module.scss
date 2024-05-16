@@ -20,6 +20,13 @@
     align-items: center;
     justify-content: space-between;
     gap: $space-xl;
+    color: $text-primary;
+    text-decoration: none;
+    transition: color 0.25s ease-in-out;
+
+    &:hover {
+      color: $text-accent;
+    }
   }
 
   & .avatar {
