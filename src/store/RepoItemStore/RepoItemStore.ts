@@ -27,7 +27,6 @@ class RepoItemStore implements ILocalStore {
       languages: computed,
       readme: computed,
       meta: computed,
-      clearData: action,
       getRepoItem: action,
       getRepoItemContributors: action,
       getRepoItemLanguages: action,
@@ -56,47 +55,40 @@ class RepoItemStore implements ILocalStore {
   }
 
   fetchRepoData = async (orgs: string, name: string): Promise<void> => {
-    await this.getRepoItem({ orgs, name });
-    await this.getRepoItemContributors({ orgs, name });
-    await this.getRepoItemLanguages({ orgs, name });
-    await this.getRepoItemReadme({ orgs, name });
+    if (this._meta === Meta.loading) return;
+
+    this._meta = Meta.loading;
+
+    try {
+      const promises = [
+        this.getRepoItem({ orgs, name }),
+        this.getRepoItemContributors({ orgs, name }),
+        this.getRepoItemLanguages({ orgs, name }),
+        this.getRepoItemReadme({ orgs, name }),
+      ];
+      await Promise.all(promises);
+
+      this._meta = Meta.success;
+    } catch (error) {
+      console.log(error);
+      this._meta = Meta.error;
+    }
   };
 
-  clearData = () => {
+  getRepoItem = async (params: getRepoItemParams): Promise<void> => {
     this._repo = null;
     this._contributors = [];
     this._languages = {};
     this._readme = '';
-  };
-
-  getRepoItem = async (params: getRepoItemParams): Promise<void> => {
-    if (this._meta === Meta.loading) return;
-
-    this._meta = Meta.loading;
-    this.clearData();
 
     const response = await ApiStore.get(`/repos/${params.orgs}/${params.name}`);
 
     runInAction(() => {
-      if (response.status !== 200) {
-        this._meta = Meta.error;
-      }
-
-      try {
-        this._repo = normalizeRepoItem(response.data);
-        this._meta = Meta.success;
-      } catch (error) {
-        console.log(error);
-        this.clearData();
-        this._meta = Meta.error;
-      }
+      this._repo = normalizeRepoItem(response.data);
     });
   };
 
   getRepoItemContributors = async (params: getRepoItemParams): Promise<void> => {
-    if (this._meta === Meta.loading) return;
-
-    this._meta = Meta.loading;
     this._contributors = [];
 
     const response = await ApiStore.get(`/repos/${params.orgs}/${params.name}/contributors`);
@@ -106,27 +98,17 @@ class RepoItemStore implements ILocalStore {
         this._meta = Meta.error;
       }
 
-      try {
-        const contributors = [];
+      const contributors = [];
 
-        for (const item of response.data) {
-          contributors.push(normalizeRepoContributor(item));
-        }
-
-        this._contributors = contributors;
-        this._meta = Meta.success;
-      } catch (error) {
-        console.log(error);
-        this._contributors = [];
-        this._meta = Meta.error;
+      for (const item of response.data) {
+        contributors.push(normalizeRepoContributor(item));
       }
+
+      this._contributors = contributors;
     });
   };
 
   getRepoItemLanguages = async (params: getRepoItemParams): Promise<void> => {
-    if (this._meta === Meta.loading) return;
-
-    this._meta = Meta.loading;
     this._languages = {};
 
     const response = await ApiStore.get(`/repos/${params.orgs}/${params.name}/languages`);
@@ -136,21 +118,11 @@ class RepoItemStore implements ILocalStore {
         this._meta = Meta.error;
       }
 
-      try {
-        this._languages = response.data;
-        this._meta = Meta.success;
-      } catch (error) {
-        console.log(error);
-        this._languages = {};
-        this._meta = Meta.error;
-      }
+      this._languages = response.data;
     });
   };
 
   getRepoItemReadme = async (params: getRepoItemParams): Promise<void> => {
-    if (this._meta === Meta.loading) return;
-
-    this._meta = Meta.loading;
     this._readme = '';
 
     const response = await ApiStore.get(`/repos/${params.orgs}/${params.name}/readme`, {
@@ -162,18 +134,11 @@ class RepoItemStore implements ILocalStore {
         this._meta = Meta.error;
       }
 
-      try {
-        const decodedText = atob(response.data.content);
-        const unicodeText = decodeURIComponent(escape(decodedText));
-        const htmlContent = await marked(unicodeText);
+      const decodedText = atob(response.data.content);
+      const unicodeText = decodeURIComponent(escape(decodedText));
+      const htmlContent = await marked(unicodeText);
 
-        this._readme = htmlContent;
-        this._meta = Meta.success;
-      } catch (error) {
-        console.log(error);
-        this._readme = '';
-        this._meta = Meta.error;
-      }
+      this._readme = htmlContent;
     });
   };
 

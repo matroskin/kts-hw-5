@@ -63,30 +63,24 @@ class ReposStore implements ILocalStore {
     this._meta = Meta.loading;
     this._repos = getInitialCollectionModel();
 
-    const response = await ApiStore.get(`/orgs/${params.name}/repos`, {
-      type: params.type,
-      per_page: this._per_page,
-      page: params.page,
-    });
+    try {
+      const response = await ApiStore.get(`/orgs/${params.name}/repos`, {
+        type: params.type,
+        per_page: this._per_page,
+        page: params.page,
+      });
 
-    runInAction(() => {
-      if (response.status !== 200) {
-        this._meta = Meta.error;
-      }
-
-      const headersLink = response.headers.link;
-      if (headersLink) {
-        const match = headersLink.match(/(?<=[?&])page=(\d+)(?=[^>]*>; rel="last")/);
-
-        if (match && match[1]) {
-          this._total = parseInt(match[1]);
+      runInAction(() => {
+        const headersLink = response.headers.link;
+        if (headersLink) {
+          const match = headersLink.match(/(?<=[?&])page=(\d+)(?=[^>]*>; rel="last")/);
+          if (match && match[1]) {
+            this._total = parseInt(match[1]);
+          }
+        } else {
+          this._total = 0;
         }
-      } else {
-        this._total = 0;
-      }
 
-      try {
-        this._meta = Meta.success;
         const repos: RepoListItemModel[] = [];
 
         for (const item of response.data) {
@@ -94,12 +88,13 @@ class ReposStore implements ILocalStore {
         }
 
         this._repos = normalizeCollection(repos, (item) => item.id);
-      } catch (error) {
-        console.log(error);
-        this._meta = Meta.error;
-        this._repos = getInitialCollectionModel();
-      }
-    });
+        this._meta = Meta.success;
+      });
+    } catch (error) {
+      console.log(error);
+      this._repos = getInitialCollectionModel();
+      this._meta = Meta.error;
+    }
   };
 
   fetchReposList = async (searchParams: URLSearchParams): Promise<void> => {
