@@ -13,36 +13,25 @@ import { ILocalStore } from 'utils/useLocalStore';
 import ApiStore from 'store/ApiStore';
 import { OPTIONS } from 'config/github';
 
-type PrivateFields = '_repos' | '_current' | '_total' | '_per_page' | '_orgsName' | '_type' | '_meta';
+type PrivateFields = '_repos' | '_total' | '_per_page' | '_meta';
 
 class ReposStore implements ILocalStore {
   private _repos: CollectionModel<number, RepoListItemModel> = getInitialCollectionModel();
-  private _current: number = 1;
   private _total: number = 0;
   private _per_page: number = 9;
-  private _orgsName: string = '';
-  private _type: string = 'all';
   private _meta: Meta = Meta.initial;
 
   constructor() {
     makeObservable<ReposStore, PrivateFields>(this, {
       _repos: observable.ref,
-      _current: observable,
       _total: observable,
       _per_page: observable,
-      _orgsName: observable,
-      _type: observable,
       _meta: observable,
       repos: computed,
-      current: computed,
       total: computed,
-      orgsName: computed,
       isNoResultsVisible: computed,
       isPaginationVisible: computed,
       meta: computed,
-      setType: action,
-      setCurrentPage: action,
-      setOrgsName: action,
       getReposList: action,
       destroy: action,
     });
@@ -52,20 +41,8 @@ class ReposStore implements ILocalStore {
     return linearizeCollection(this._repos);
   }
 
-  get current(): number {
-    return this._current;
-  }
-
   get total(): number {
     return this._total;
-  }
-
-  get orgsName(): string {
-    return this._orgsName;
-  }
-
-  get type(): string {
-    return this._type;
   }
 
   get isNoResultsVisible(): boolean {
@@ -79,18 +56,6 @@ class ReposStore implements ILocalStore {
   get meta(): Meta {
     return this._meta;
   }
-
-  setType = (type: string) => {
-    this._type = type;
-  };
-
-  setCurrentPage = (pageNumber: number) => {
-    this._current = pageNumber;
-  };
-
-  setOrgsName = (name: string) => {
-    this._orgsName = name;
-  };
 
   getReposList = async (params: getReposListParams): Promise<void> => {
     if (this._meta === Meta.loading) return;
@@ -118,7 +83,6 @@ class ReposStore implements ILocalStore {
         }
       } else {
         this._total = 0;
-        this._current = 1;
       }
 
       try {
