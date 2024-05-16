@@ -167,8 +167,6 @@ class ReposStore implements ILocalStore {
   private readonly _searchReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParams('orgs'),
     (orgs) => {
-      console.log('orgs', orgs);
-
       if (!orgs) return;
 
       rootStore.query.setOrgsName(orgs.toString());
@@ -179,8 +177,6 @@ class ReposStore implements ILocalStore {
   private readonly _typeReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParams('type'),
     (type) => {
-      console.log('type', type);
-
       if (!type) return;
 
       const selectedOptions = type
@@ -197,8 +193,6 @@ class ReposStore implements ILocalStore {
   private readonly _pageReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParams('page'),
     (page) => {
-      console.log('page', page);
-
       if (!page) return;
 
       rootStore.query.setCurrentPage(parseInt(page as string, 10) || 1);

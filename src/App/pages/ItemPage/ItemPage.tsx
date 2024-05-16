@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-import { Meta } from "utils/meta";
-import { useLocalStore } from "utils/useLocalStore";
-import RepoItemStore from "store/RepoItemStore";
-import Loader from "components/Loader";
-import Title from "./components/Title";
-import Info from "./components/Info";
-import Readme from "./components/Readme";
-import styles from "./ItemPage.module.scss";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { Meta } from 'utils/meta';
+import { useLocalStore } from 'utils/useLocalStore';
+import RepoItemStore from 'store/RepoItemStore';
+import Loader from 'components/Loader';
+import Title from './components/Title';
+import Info from './components/Info';
+import Readme from './components/Readme';
+import styles from './ItemPage.module.scss';
 
 const ItemPage = () => {
-  const { fetchRepoData, meta, repo, contributors, languages, readme } =
-    useLocalStore(() => new RepoItemStore());
+  const { fetchRepoData, meta, repo, contributors, languages, readme } = useLocalStore(() => new RepoItemStore());
 
-  const { orgs = "", name = "" } = useParams<{ orgs: string; name: string }>();
+  const { orgs = '', name = '' } = useParams<{ orgs: string; name: string }>();
 
   useEffect(() => {
     fetchRepoData(orgs, name);
@@ -30,17 +29,8 @@ const ItemPage = () => {
         ) : (
           repo && (
             <div className={styles.container}>
-              <Title
-                avatar={repo.owner.avatarUrl}
-                orgs={orgs}
-                name={repo.name}
-              />
-              <Info
-                data={repo}
-                orgs={orgs}
-                contributors={contributors}
-                languages={languages}
-              />
+              <Title avatar={repo.owner.avatarUrl} orgs={orgs} name={repo.name} />
+              <Info data={repo} orgs={orgs} contributors={contributors} languages={languages} />
               {readme && <Readme content={readme} />}
             </div>
           )

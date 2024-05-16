@@ -6,7 +6,9 @@
   align-items: center;
   gap: $space-m;
 
-  & .link {
+  & .back {
+    cursor: pointer;
+
     svg {
       display: block;
       color: $brand;
