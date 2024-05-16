@@ -11,6 +11,7 @@ import {
 import rootStore from 'store/RootStore';
 import { ILocalStore } from 'utils/useLocalStore';
 import ApiStore from 'store/ApiStore';
+import { OPTIONS } from 'config/github';
 
 type PrivateFields = '_repos' | '_current' | '_total' | '_per_page' | '_orgsName' | '_type' | '_meta';
 
@@ -99,8 +100,8 @@ class ReposStore implements ILocalStore {
 
     const response = await ApiStore.get(`/orgs/${params.name}/repos`, {
       type: params.type,
-      page: params.page,
       per_page: this._per_page,
+      page: params.page,
     });
 
     runInAction(() => {
@@ -137,31 +138,77 @@ class ReposStore implements ILocalStore {
     });
   };
 
-  private readonly _qpReaction: IReactionDisposer = reaction(
-    () => ({
-      search: rootStore.query.getParams('search'),
+  fetchReposList = async (searchParams: URLSearchParams): Promise<void> => {
+    const search = searchParams.get('orgs');
+    const type = searchParams.get('type');
+    const page = Number(searchParams.get('page'));
+
+    if (search) {
+      rootStore.query.setOrgsName(search);
+    }
+
+    if (type) {
+      rootStore.query.setTypeRepos(OPTIONS.filter((v) => type.includes(v.value)));
+    }
+
+    if (page) {
+      rootStore.query.setCurrentPage(page);
+    }
+
+    if (!search) return;
+
+    await this.getReposList({
+      name: rootStore.query.getParams('orgs'),
+      page: rootStore.query.getParams('page'),
       type: rootStore.query.getParams('type'),
-      page: rootStore.query.getParams('page') || 1,
-    }),
-    ({ search, type, page }) => {
-      const repoName = (search || '').toString();
-      const currentPage = parseInt(page as string, 10) || 1;
-      const repoType = (type || 'all').toString();
+    });
+  };
 
-      search && this.setOrgsName(repoName);
-      type && this.setType(repoType);
-      page && this.setCurrentPage(currentPage);
+  private readonly _searchReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParams('orgs'),
+    (orgs) => {
+      console.log('orgs', orgs);
 
-      // this.getReposList({
-      //   name: repoName,
-      //   type: repoType,
-      //   page: currentPage.toString(),
-      // });
+      if (!orgs) return;
+
+      rootStore.query.setOrgsName(orgs.toString());
+      rootStore.query.setCurrentPage(1);
+    },
+  );
+
+  private readonly _typeReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParams('type'),
+    (type) => {
+      console.log('type', type);
+
+      if (!type) return;
+
+      const selectedOptions = type
+        .toString()
+        .split(',')
+        .map((item) => item.trim());
+      const filteredOptions = OPTIONS.filter((option) => selectedOptions.includes(option.key));
+
+      rootStore.query.setTypeRepos(filteredOptions);
+      rootStore.query.setCurrentPage(1);
+    },
+  );
+
+  private readonly _pageReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParams('page'),
+    (page) => {
+      console.log('page', page);
+
+      if (!page) return;
+
+      rootStore.query.setCurrentPage(parseInt(page as string, 10) || 1);
     },
   );
 
   destroy = () => {
-    this._qpReaction();
+    this._searchReaction();
+    this._typeReaction();
+    this._pageReaction();
   };
 }
 

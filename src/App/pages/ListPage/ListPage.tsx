@@ -1,102 +1,60 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-import { Meta } from "utils/meta";
-import { useLocalStore } from "utils/useLocalStore";
-import rootStore from "store/RootStore";
-import ReposStore from "store/ReposStore";
-import Text from "components/Text";
-import Loader from "components/Loader";
-import Card from "./components/Card";
-import Pagination from "./components/Pagination";
-import Input from "./components/Input";
-import Button from "./components/Button";
-import MultiDropdown, { Option } from "./components/MultiDropdown";
-import SearchIcon from "components/icons/SearchIcon";
-import styles from "./ListPage.module.scss";
+import React, { useCallback, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { Meta } from 'utils/meta';
+import { useLocalStore } from 'utils/useLocalStore';
+import rootStore from 'store/RootStore';
+import ReposStore from 'store/ReposStore';
+import Text from 'components/Text';
+import Loader from 'components/Loader';
+import Card from './components/Card';
+import Pagination from './components/Pagination';
+import Input from './components/Input';
+import Button from './components/Button';
+import MultiDropdown, { Option } from './components/MultiDropdown';
+import SearchIcon from 'components/icons/SearchIcon';
+import styles from './ListPage.module.scss';
 
-import { OPTIONS } from "./config";
+import { OPTIONS } from './config';
 
 const ListPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const {
-    getReposList,
-    setOrgsName,
-    setType,
-    setCurrentPage,
-    orgsName,
-    meta,
-    repos,
-    isNoResultsVisible,
-    isPaginationVisible,
-    current,
-    total,
-  } = useLocalStore(() => new ReposStore());
+  const { query } = rootStore;
+  const { fetchReposList, meta, repos, isNoResultsVisible, isPaginationVisible, total } = useLocalStore(
+    () => new ReposStore(),
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedValues, setSelectedValues] = useState<Option[]>([]);
 
   useEffect(() => {
-    const searchParam = rootStore.query.getParams("search");
-    if (!searchParam) {
-      return;
-    }
-    getReposList({
-      name: rootStore.query.getParams("search"),
-      page: rootStore.query.getParams("page"),
-      type: rootStore.query.getParams("type"),
-    });
+    fetchReposList(searchParams);
   }, [searchParams]);
 
-  useEffect(() => {
-    const search = searchParams.get("search");
-    const type = searchParams.get("type");
-    const page = Number(searchParams.get("page"));
-
-    if (search) {
-      setOrgsName(search);
-    }
-
-    if (type) {
-      setType(type);
-      setSelectedValues(OPTIONS.filter((v) => type.includes(v.value)));
-    }
-
-    if (page) {
-      setCurrentPage(page);
-    }
-  }, []);
-
   const handleDropdownChange = useCallback((newValue: Option[]) => {
-    setSelectedValues(newValue);
-    setCurrentPage(1);
+    query.setTypeRepos(newValue);
+    query.setCurrentPage(1);
   }, []);
 
-  const handleClick = useCallback(
-    (orgs: string, name: string) => {
-      navigate(`${orgs}/${name}`);
+  const handleOpenCard = useCallback(
+    (name: string) => {
+      navigate(`${query.orgsName}/${name}`);
     },
     [navigate],
   );
 
   const handleSearch = () => {
+    query.setCurrentPage(1);
+
     setSearchParams({
-      search: orgsName,
-      type: selectedValues.map((v) => v.value).join(",") || "all",
+      orgs: query.orgsName,
+      type: query.typeRepos.map((v) => v.value).join(','),
     });
   };
 
-  const handlePageChange = useCallback(
-    (pageNumber: number) => {
-      setCurrentPage(pageNumber);
-      if (selectedValues.length) {
-        const typeString = selectedValues.map((v) => v.value).join(",");
-        setType(typeString);
-      }
-    },
-    [selectedValues],
-  );
+  const handlePageChange = useCallback((pageNumber: number) => {
+    query.setCurrentPage(pageNumber);
+  }, []);
 
   return (
     <div className={`page ${styles.container}`}>
@@ -108,19 +66,15 @@ const ListPage: React.FC = () => {
         <div className={styles.filter}>
           <MultiDropdown
             options={OPTIONS}
-            value={selectedValues}
+            value={query.typeRepos}
             onChange={handleDropdownChange}
-            getTitle={(value) => value.map((v) => v.value).join(", ")}
+            getTitle={(value) => value.map((v) => v.value).join(', ')}
           />
         </div>
 
         <form className={styles.search} onSubmit={(e) => e.preventDefault()}>
-          <Input
-            value={orgsName}
-            onChange={(e) => setOrgsName(e)}
-            placeholder="Enter organization name"
-          />
-          <Button onClick={handleSearch} disabled={!orgsName}>
+          <Input value={query.orgsName} onChange={(e) => query.setOrgsName(e)} placeholder="Enter organization name" />
+          <Button onClick={handleSearch} disabled={!query.orgsName}>
             <SearchIcon />
           </Button>
         </form>
@@ -140,7 +94,7 @@ const ListPage: React.FC = () => {
                   pushed={item.pushedAt}
                   title={item.name}
                   subtitle={item.description}
-                  onClick={() => handleClick(item.owner.login, item.name)}
+                  onClick={() => handleOpenCard(item.name)}
                 />
               ))}
             </div>
@@ -152,11 +106,7 @@ const ListPage: React.FC = () => {
             )}
 
             {isPaginationVisible && (
-              <Pagination
-                currentPage={current}
-                totalPages={total}
-                onPageChange={handlePageChange}
-              />
+              <Pagination currentPage={query.currentPage} totalPages={total} onPageChange={handlePageChange} />
             )}
           </>
         )}
