@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Text from 'components/Text';
 import ArrowIcon from 'components/icons/ArrowIcon';
 import styles from './Title.module.scss';
@@ -23,7 +23,9 @@ const Title: React.FC<TitleProps> = ({ avatar, orgs, name }) => {
         <ArrowIcon onClick={() => handleBack()} />
       </div>
 
-      <img src={avatar} className={styles.avatar} alt="avatar" />
+      <Link to={`https://github.com/${orgs}`} className={styles.link}>
+        <img src={avatar} className={styles.avatar} alt="avatar" />
+      </Link>
 
       <Text view="title" weight="bold">
         {name}
