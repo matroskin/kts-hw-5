@@ -92,6 +92,7 @@ class ReposStore implements ILocalStore {
       });
     } catch (error) {
       console.log(error);
+      this._total = 0;
       this._repos = getInitialCollectionModel();
       this._meta = Meta.error;
     }
@@ -101,6 +102,16 @@ class ReposStore implements ILocalStore {
     const search = searchParams.get('orgs');
     const type = searchParams.get('type');
     const page = Number(searchParams.get('page'));
+
+    if (!search) {
+      rootStore.query.setOrgsName('');
+      rootStore.query.setTypeRepos([{ key: 'all', value: 'all' }]);
+      rootStore.query.setCurrentPage(1);
+      this._total = 0;
+      this._repos = getInitialCollectionModel();
+
+      return;
+    }
 
     if (search) {
       rootStore.query.setOrgsName(search);
@@ -112,13 +123,6 @@ class ReposStore implements ILocalStore {
 
     if (page) {
       rootStore.query.setCurrentPage(page);
-    }
-
-    if (!search) {
-      rootStore.query.setOrgsName('');
-      rootStore.query.setTypeRepos([{ key: 'all', value: 'all' }]);
-      rootStore.query.setCurrentPage(1);
-      return;
     }
 
     await this.getReposList({
