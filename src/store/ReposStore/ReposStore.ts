@@ -13,12 +13,13 @@ import { ILocalStore } from 'utils/useLocalStore';
 import ApiStore from 'store/ApiStore';
 import { OPTIONS } from 'config/github';
 
-type PrivateFields = '_repos' | '_total' | '_per_page' | '_meta';
+type PrivateFields = '_repos' | '_total' | '_per_page' | '_meta' | '_is_requerst';
 
 class ReposStore implements ILocalStore {
   private _repos: CollectionModel<number, RepoListItemModel> = getInitialCollectionModel();
   private _total: number = 0;
   private _per_page: number = 9;
+  private _is_requerst: boolean = false;
   private _meta: Meta = Meta.initial;
 
   constructor() {
@@ -26,6 +27,7 @@ class ReposStore implements ILocalStore {
       _repos: observable.ref,
       _total: observable,
       _per_page: observable,
+      _is_requerst: observable,
       _meta: observable,
       repos: computed,
       total: computed,
@@ -46,7 +48,7 @@ class ReposStore implements ILocalStore {
   }
 
   get isNoResultsVisible(): boolean {
-    return this.repos.length === 0;
+    return this.repos.length === 0 && this._is_requerst;
   }
 
   get isPaginationVisible(): boolean {
@@ -95,6 +97,9 @@ class ReposStore implements ILocalStore {
       this._total = 0;
       this._repos = getInitialCollectionModel();
       this._meta = Meta.error;
+      this._is_requerst = false;
+    } finally {
+      this._is_requerst = true;
     }
   };
 
@@ -109,6 +114,7 @@ class ReposStore implements ILocalStore {
       rootStore.query.setCurrentPage(1);
       this._total = 0;
       this._repos = getInitialCollectionModel();
+      this._is_requerst = false;
 
       return;
     }
