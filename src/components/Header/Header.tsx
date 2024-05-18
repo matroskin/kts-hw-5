@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Text from 'components/Text';
 import LogoIcon from 'components/icons/LogoIcon';
+import LangSwitcher from 'components/LangSwitcher';
 import styles from './Header.module.scss';
 
 const Header = () => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.header}>
       <div className={`content ${styles.content}`}>
@@ -12,11 +16,11 @@ const Header = () => {
           <LogoIcon />
 
           <Text view="p-20" weight="bold">
-            GitHub Client
+            {t('GitHub Client')}
           </Text>
         </Link>
 
-        <img className={styles.avatar} src={'/avatar.jpg'} alt="avatar" />
+        <LangSwitcher />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import Text from 'components/Text';
 import StarIcon from 'components/icons/StarIcon';
 import { formatDate } from 'utils/formatDate';
@@ -23,6 +24,8 @@ export type CardProps = {
 };
 
 const Card: React.FC<CardProps> = ({ className, image, stargazers, pushed, title, subtitle, onClick }) => {
+  const { t } = useTranslation('list');
+
   const cardClassName = classnames(styles.card, className);
 
   return (
@@ -39,7 +42,7 @@ const Card: React.FC<CardProps> = ({ className, image, stargazers, pushed, title
             </div>
 
             <Text view="p-14" tag="p" weight="medium" color="secondary">
-              {`Updated ${formatDate(pushed)}`}
+              {`${t("Updated")} ${formatDate(pushed)}`}
             </Text>
           </div>
           <Text view="p-20" tag="p" weight="medium" color="primary" maxLines={2}>

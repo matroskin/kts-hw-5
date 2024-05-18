@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RepoContributorModel } from 'store/models/github';
 import styles from './Contributors.module.scss';
 
@@ -7,12 +8,14 @@ interface ContributorsProps {
 }
 
 const Contributors: React.FC<ContributorsProps> = ({ contributors }) => {
+  const { t } = useTranslation('item');
+
   const contributorsCount = contributors.length;
 
   return (
     <div className={styles.contributors}>
       <div className={styles.title}>
-        <span>Contributors</span>
+        <span>{t("Contributors")}</span>
         <span className={styles.counts}>{contributorsCount}</span>
       </div>
       {contributors.map((contributor) => (

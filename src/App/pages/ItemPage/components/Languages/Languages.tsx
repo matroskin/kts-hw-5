@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './Languages.module.scss';
 
 interface LanguagesProps {
@@ -6,11 +7,13 @@ interface LanguagesProps {
 }
 
 const Languages: React.FC<LanguagesProps> = ({ languages }) => {
+  const { t } = useTranslation('item');
+
   const totalLines = Object.values(languages).reduce((acc, cur) => acc + cur, 0);
 
   return (
     <div className={styles.languages}>
-      <div className={styles.title}>Languages</div>
+      <div className={styles.title}>{t('Languages')}</div>
       <div className={styles.progress}>
         {Object.entries(languages).map(([language, count]) => (
           <div
