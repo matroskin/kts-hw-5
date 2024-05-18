@@ -1,9 +1,9 @@
 @import "styles/variables";
 
 .loading {
-  padding: $space-xl 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: $space-xl;
 }
 
 .container {
