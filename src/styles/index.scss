@@ -27,18 +27,14 @@ pre {
   margin: 0;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .center {
   text-align: center;
 }
 
 .content {
   padding: 0 $space-xl;
+  height: 100%;
+  min-height: 100%;
   width: 1285px;
 }
 
