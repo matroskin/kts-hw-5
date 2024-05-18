@@ -73,6 +73,13 @@ class ReposStore implements ILocalStore {
       });
 
       runInAction(() => {
+        if (response.data.length === 0) {
+          this._total = 0;
+          this._meta = Meta.error;
+
+          return;
+        }
+
         const headersLink = response.headers.link;
         if (headersLink) {
           const match = headersLink.match(/(?<=[?&])page=(\d+)(?=[^>]*>; rel="last")/);
@@ -124,7 +131,8 @@ class ReposStore implements ILocalStore {
     }
 
     if (type) {
-      rootStore.query.setTypeRepos(OPTIONS.filter((v) => type.includes(v.value)));
+      const selectedOptions = OPTIONS.filter((v) => type.includes(v.value));
+      selectedOptions.length > 0 && rootStore.query.setTypeRepos(selectedOptions);
     }
 
     if (page) {
