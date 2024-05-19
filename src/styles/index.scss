@@ -45,3 +45,15 @@ pre {
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: $breakpoint-s) {
+   .content {
+    width: 100%;
+  }
+}
+
+@media (max-width: $breakpoint-m) {
+   .content {
+    width: 100%;
+  }
+}

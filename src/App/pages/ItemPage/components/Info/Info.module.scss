@@ -10,3 +10,21 @@
     gap: 80px;
   }
 }
+
+@media (max-width: $breakpoint-s) {
+  .info {
+    & .content {
+      flex-direction: column;
+      gap: $space-xl;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-m) {
+  .info {
+    & .content {
+      flex-direction: column;
+      gap: $space-xl;
+    }
+  }
+}

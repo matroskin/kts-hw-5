@@ -64,3 +64,21 @@
     gap: $space-xxs;
   }
 }
+
+@media (max-width: $breakpoint-s) {
+  .card {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    gap: $space-m;
+
+    & .image {
+      width: 100%;
+      height: 200px;
+    }
+
+    & .content {
+      width: 100%;
+    }
+  }
+}

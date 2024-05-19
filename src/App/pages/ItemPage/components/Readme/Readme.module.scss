@@ -4,6 +4,7 @@
   border: 1px solid $gray;
   border-radius: 4px;
   position: relative;
+  overflow: auto;
 
   & .title {
     padding: 16px;

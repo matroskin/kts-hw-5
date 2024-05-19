@@ -58,3 +58,10 @@
 .bold {
   font-weight: 700;
 }
+
+@media (max-width: $breakpoint-s) {
+  .title {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
