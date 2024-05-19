@@ -55,7 +55,7 @@ module.exports = {
     !isProd && new ReactRefreshWebpackPlugin(),
     isProd &&
       new MiniCssExtractPlugin({
-        filename: '[name]-[hash].css',
+        filename: 'css/[name]-[hash].css',
       }),
     new TsCheckerPlugin(),
     new Dotenv(),
@@ -88,6 +88,13 @@ module.exports = {
           dataUrlCondition: {
             maxSize: 10 * 1024,
           },
+        },
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|otf)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name][ext][query]',
         },
       },
     ],
