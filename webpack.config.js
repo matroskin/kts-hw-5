@@ -5,9 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const srcPath = path.resolve(__dirname, 'src');
 const buildPath = path.resolve(__dirname, 'dist');
+const publicPath = path.resolve(__dirname, 'public');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -59,6 +61,9 @@ module.exports = {
     new Dotenv(),
     new webpack.DefinePlugin({
       __IS_DEV__: JSON.stringify(!isProd),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: publicPath, to: buildPath }],
     }),
   ].filter(Boolean),
   module: {
