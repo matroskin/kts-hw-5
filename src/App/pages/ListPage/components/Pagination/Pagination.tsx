@@ -13,11 +13,15 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
   const navigate = useNavigate();
 
   const prevPage = () => {
-    onPageChange(currentPage - 1);
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
   };
 
   const nextPage = () => {
-    onPageChange(currentPage + 1);
+    if (currentPage < totalPages) {
+      handlePageChange(currentPage + 1);
+    }
   };
 
   const handlePageChange = useCallback(
@@ -27,15 +31,24 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
       currentUrlParams.set('page', pageNumber.toString());
       navigate(`?${currentUrlParams.toString()}`, { replace: true });
     },
-    [navigate],
+    [navigate, onPageChange],
   );
 
-  const pages = useMemo(() => Array.from({ length: totalPages }, (_, index) => index + 1), [totalPages]);
+  const pages = useMemo(() => {
+    let startPage = Math.max(currentPage - 2, 1);
+    let endPage = Math.min(startPage + 4, totalPages);
+
+    if (endPage - startPage < 4) {
+      startPage = Math.max(endPage - 4, 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+  }, [currentPage, totalPages]);
 
   return (
     <div className={styles.pagination}>
       <button className={styles.button} onClick={prevPage} disabled={currentPage === 1}>
-        <ArrowIcon />
+        <ArrowIcon direction="right" />
       </button>
 
       {pages.map((page) => (
