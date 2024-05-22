@@ -109,7 +109,7 @@ const ListPage: React.FC = () => {
 
             {isNoResultsVisible && (
               <Text className="center" view="p-16" tag="p" color="secondary">
-                {t('No results')}
+                {t('Organization')} <Text view="p-20" tag="span" weight="bold">{query.orgsName}</Text> {t('No results')}
               </Text>
             )}
 
