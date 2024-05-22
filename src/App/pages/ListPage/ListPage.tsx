@@ -36,6 +36,11 @@ const ListPage: React.FC = () => {
   const handleDropdownChange = useCallback((newValue: Option[]) => {
     query.setTypeRepos(newValue);
     query.setCurrentPage(1);
+
+    setSearchParams({
+      orgs: query.orgsName || 'ktsstudio',
+      type: query.typeRepos.map((v) => v.value).join(','),
+    });
   }, []);
 
   const handleOpenCard = useCallback(
@@ -109,7 +114,11 @@ const ListPage: React.FC = () => {
 
             {isNoResultsVisible && (
               <Text className="center" view="p-16" tag="p" color="secondary">
-                {t('Organization')} <Text view="p-20" tag="span" weight="bold">{query.orgsName}</Text> {t('No results')}
+                {t('Organization')}{' '}
+                <Text view="p-20" tag="span" weight="bold">
+                  {query.orgsName}
+                </Text>{' '}
+                {t('No results')}
               </Text>
             )}
 
