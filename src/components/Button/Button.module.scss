@@ -15,6 +15,7 @@
 
   color: $button-primary-text;
   background-color: $button-primary-bg;
+  transition: background-color 0.25s ease-in-out;
 
   &:not(.loading):not(:disabled):hover {
     color: $button-primary-text-hover;

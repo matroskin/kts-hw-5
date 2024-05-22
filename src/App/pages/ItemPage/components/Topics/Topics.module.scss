@@ -20,6 +20,9 @@
     align-items: center;
     text-align: center;
     color: $topic-color;
+    transition:
+      color 0.25s ease-in-out,
+      background-color 0.25s ease-in-out;
 
     text-decoration: none;
 

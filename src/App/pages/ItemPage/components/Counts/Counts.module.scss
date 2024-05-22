@@ -15,6 +15,7 @@
     line-height: 18px;
     color: $text-secondary;
     text-decoration: none;
+    transition: color 0.25s ease-in-out;
 
     &:hover {
       color: $link-color-hover;

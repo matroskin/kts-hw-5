@@ -21,6 +21,7 @@
   color: $input-text;
   background-color: $input-bg;
   border: 1px solid $input-border;
+  transition: border 0.25s ease-in-out;
 
   &:focus {
     outline: none;

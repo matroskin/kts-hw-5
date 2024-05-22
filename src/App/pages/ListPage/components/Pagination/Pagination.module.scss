@@ -19,6 +19,9 @@
     line-height: 22px;
     color: $text-primary;
     background-color: transparent;
+    transition:
+      color 0.25s ease-in-out,
+      background-color 0.25s ease-in-out;
     cursor: pointer;
 
     &.active {
@@ -37,5 +40,15 @@
     &:disabled svg {
       color: $text-secondary;
     }
+
+    &.active:hover {
+      color: $button-primary-text-hover;
+      background-color: $button-primary-bg-hover;
+    }
+
+    // &:active:not(:disabled) {
+    //   color: $button-primary-text-active;
+    //   background-color: $button-primary-bg-active;
+    // }
   }
 }
