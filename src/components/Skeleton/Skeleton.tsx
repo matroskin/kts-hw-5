@@ -5,10 +5,11 @@ interface SkeletonProps {
   width?: string;
   height?: string;
   radius?: string;
+  type?: 'card';
 }
 
 const Skeleton = (props: SkeletonProps) => {
-  const { width, height, radius } = props;
+  const { width, height, radius, type } = props;
 
   const skeletonStyles: CSSProperties = {
     width,
@@ -16,7 +17,7 @@ const Skeleton = (props: SkeletonProps) => {
     borderRadius: radius,
   };
 
-  return <div className={styles.skeleton} style={skeletonStyles}></div>;
+  return <div className={`${styles.skeleton} ${type ? styles[type] : ''}`} style={skeletonStyles}></div>;
 };
 
 export default memo(Skeleton);

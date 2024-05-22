@@ -1,16 +1,21 @@
-@import 'styles/variables';
+@import "styles/variables";
 
 .skeleton {
-    background-color: $bg-color;
-    animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite;
+  background-color: $gray;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  &.card {
+    width: 348px;
+    height: 520px;
+  }
 }
 
 @keyframes pulse {
   50% {
-      opacity: .5
+    opacity: 0.5;
   }
 }
 
 .animate-pulse {
-  animation: pulse 2s cubic-bezier(.4,0,.6,1) infinite
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

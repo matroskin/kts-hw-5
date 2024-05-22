@@ -7,7 +7,7 @@ import { useLocalStore } from 'utils/useLocalStore';
 import rootStore from 'store/RootStore';
 import ReposStore from 'store/ReposStore';
 import Text from 'components/Text';
-import Loader from 'components/Loader';
+import Skeleton from 'components/Skeleton';
 import Card from './components/Card';
 import Pagination from './components/Pagination';
 import Input from './components/Input';
@@ -87,7 +87,9 @@ const ListPage: React.FC = () => {
 
         {meta === Meta.loading ? (
           <div className={styles.loading}>
-            <Loader color="accent" />
+            <Skeleton type="card" radius="6px" />
+            <Skeleton type="card" radius="6px" />
+            <Skeleton type="card" radius="6px" />
           </div>
         ) : (
           <>
