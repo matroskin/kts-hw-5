@@ -49,7 +49,7 @@ const ListPage: React.FC = () => {
     query.setCurrentPage(1);
 
     setSearchParams({
-      orgs: query.orgsName,
+      orgs: query.orgsName || 'ktsstudio',
       type: query.typeRepos.map((v) => v.value).join(','),
     });
   };
@@ -110,6 +110,15 @@ const ListPage: React.FC = () => {
             {isNoResultsVisible && (
               <Text className="center" view="p-16" tag="p" color="secondary">
                 {t('No results')}
+              </Text>
+            )}
+
+            {!isNoResultsVisible && total === 0 && (
+              <Text view="p-20" tag="p" className={styles.clear}>
+                👆🏻 {t('Default name')}{' '}
+                <span onClick={handleSearch} className={styles.link}>
+                  ktsstudio
+                </span>
               </Text>
             )}
 

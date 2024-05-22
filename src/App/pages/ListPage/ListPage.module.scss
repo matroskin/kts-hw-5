@@ -31,6 +31,25 @@
   gap: $space-s;
 }
 
+.clear {
+  font-size: 20px;
+  text-align: center;
+}
+
+.link {
+  padding: $space-xxxs $space-xs;
+  border-radius: $border-radius;
+  color: $white;
+  background-color: $brand;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: $brand-hover;
+  }
+}
+
 @media (max-width: $breakpoint-s) {
   .list {
     gap: $space-xl;
