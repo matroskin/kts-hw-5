@@ -77,3 +77,9 @@
     gap: $space-l;
   }
 }
+
+@media (max-width: $breakpoint-l) {
+  .list {
+    gap: $space-l;
+  }
+}

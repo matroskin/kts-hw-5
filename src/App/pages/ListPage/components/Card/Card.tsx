@@ -42,15 +42,17 @@ const Card: React.FC<CardProps> = ({ className, image, stargazers, pushed, title
             </div>
 
             <Text view="p-14" tag="p" weight="medium" color="secondary">
-              {`${t("Updated")} ${formatDate(pushed)}`}
+              {`${t('Updated')} ${formatDate(pushed)}`}
             </Text>
           </div>
-          <Text view="p-20" tag="p" weight="medium" color="primary" maxLines={2}>
-            {title}
-          </Text>
-          <Text view="p-16" tag="p" weight="normal" color="secondary" maxLines={3}>
-            {subtitle}
-          </Text>
+          <div className={styles.bottom}>
+            <Text view="p-20" tag="p" weight="medium" color="primary">
+              {title}
+            </Text>
+            <Text view="p-16" tag="p" weight="normal" color="secondary">
+              {subtitle}
+            </Text>
+          </div>
         </div>
       </div>
     </div>
