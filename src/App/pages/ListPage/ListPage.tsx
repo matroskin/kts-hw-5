@@ -84,6 +84,7 @@ const ListPage: React.FC = () => {
             value={query.orgsName}
             onChange={(e) => query.setOrgsName(e)}
             placeholder={t('Enter organization name')}
+            clear={true}
           />
           <Button onClick={handleSearch} disabled={!query.orgsName}>
             <SearchIcon />

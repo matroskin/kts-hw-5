@@ -42,3 +42,19 @@
   top: 14px;
   right: 14px;
 }
+
+.clearIcon {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  font-size: $space-l;
+  color: $brand;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.25s ease-in-out;
+
+  &:hover {
+    color: $brand-hover;
+  }
+}

@@ -25,6 +25,7 @@
   &:disabled {
     color: $button-primary-text-disabled;
     background-color: $button-primary-bg-disabled;
+    cursor: default;
   }
 
   &:active:not(:disabled) {
