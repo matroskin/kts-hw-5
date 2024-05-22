@@ -42,7 +42,27 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
       startPage = Math.max(endPage - 4, 1);
     }
 
-    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+    const pagesArray = [];
+
+    if (startPage > 1) {
+      pagesArray.push(1);
+      if (startPage > 2) {
+        pagesArray.push('...');
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pagesArray.push(i);
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        pagesArray.push('...');
+      }
+      pagesArray.push(totalPages);
+    }
+
+    return pagesArray;
   }, [currentPage, totalPages]);
 
   return (
@@ -51,16 +71,22 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         <ArrowIcon direction="right" />
       </button>
 
-      {pages.map((page) => (
-        <button
-          key={page}
-          className={`${styles.button} ${currentPage === page ? styles.active : ''}`}
-          onClick={() => handlePageChange(page)}
-          disabled={currentPage === page}
-        >
-          {page}
-        </button>
-      ))}
+      {pages.map((page, index) =>
+        typeof page === 'number' ? (
+          <button
+            key={index}
+            className={`${styles.button} ${currentPage === page ? styles.active : ''}`}
+            onClick={() => handlePageChange(page)}
+            disabled={currentPage === page}
+          >
+            {page}
+          </button>
+        ) : (
+          <span key={index} className={styles.ellipsis}>
+            ...
+          </span>
+        ),
+      )}
 
       <button className={styles.button} onClick={nextPage} disabled={currentPage === totalPages}>
         <ArrowIcon direction="left" />
