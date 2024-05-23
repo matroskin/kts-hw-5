@@ -57,6 +57,10 @@
     gap: $space-xl;
   }
 
+  .loading {
+    gap: $space-l;
+  }
+
   .filter {
     margin-top: $space-m;
     width: 100%;
@@ -78,8 +82,13 @@
   }
 }
 
-@media (max-width: $breakpoint-l) {
+@media (max-width: $breakpoint-xl) {
   .list {
+    gap: $space-l;
+    justify-content: center;
+  }
+
+  .loading {
     gap: $space-l;
   }
 }
