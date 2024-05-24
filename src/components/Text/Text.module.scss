@@ -35,16 +35,16 @@
   line-height: 18px;
 }
 
-.text-primary {
-  color: $text-primary;
+.primary {
+  color: var(--text-primary);
 }
 
-.text-secondary {
-  color: $text-secondary;
+.secondary {
+  color: var(--text-secondary);
 }
 
-.text-accent {
-  color: $text-accent;
+.accent {
+  color: var(--text-accent);
 }
 
 .normal {

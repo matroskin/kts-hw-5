@@ -3,11 +3,11 @@
 .loading {
   display: flex;
   flex-direction: column;
-  gap: $space-xl;
+  gap: var(--space-xl);
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  gap: $space-xl;
+  gap: var(--space-xl);
 }

@@ -13,7 +13,7 @@ const LangSwitcher: React.FC = () => {
 
   return (
     <Button className={styles.lang} onClick={toggle}>
-      <Text view="p-16" weight="bold">
+      <Text view="p-16" weight="normal">
         {t('Language')}
       </Text>
     </Button>

@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { Routes, Route } from 'react-router-dom';
+import rootStore from 'store/RootStore/instatnce';
 import Header from 'components/Header';
 import ListPage from './pages/ListPage';
 import ItemPage from './pages/ItemPage';
@@ -11,7 +13,7 @@ const App = () => {
   useQueryParamsStoreInit();
 
   return (
-    <div className={styles.app}>
+    <div className={`${styles.app} ${rootStore.theme.theme}`}>
       <Suspense fallback="">
         <Header />
         <Routes>
@@ -24,4 +26,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default observer(App);

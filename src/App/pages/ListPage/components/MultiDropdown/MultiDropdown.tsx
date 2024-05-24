@@ -107,7 +107,9 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({ className, options, value
               onClick={() => onSelect(option)}
               className={cn(style.option, { [style.selected]: selectedKeysSet.has(option.key) })}
             >
-              <Text view="p-16">{option.value}</Text>
+              <Text view="p-16" color="primary">
+                {option.value}
+              </Text>
             </div>
           ))}
         </div>

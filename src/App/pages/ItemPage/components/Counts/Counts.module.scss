@@ -4,27 +4,27 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: $space-xxs;
+  gap: var(--space-xxs);
 
   & .count {
     display: flex;
-    gap: $space-xxs;
+    gap: var(--space-xxs);
 
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    color: $text-secondary;
+    color: var(--text-secondary);
     text-decoration: none;
     transition: color 0.25s ease-in-out;
 
     &:hover {
-      color: $link-color-hover;
+      color: var(--link-color-hover);
 
       & svg path {
-        fill: $link-color-hover;
+        fill: var(--link-color-hover);
       }
       & svg ellipse {
-        fill: $link-color-hover;
+        fill: var(--link-color-hover);
       }
     }
   }

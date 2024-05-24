@@ -7,7 +7,7 @@
   flex-wrap: wrap;
 
   & .button {
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,7 +17,7 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
-    color: $text-primary;
+    color: var(--text-primary);
     background-color: transparent;
     transition:
       color 0.25s ease-in-out,
@@ -25,34 +25,38 @@
     cursor: pointer;
 
     &.active {
-      color: $button-primary-text;
-      background-color: $button-primary-bg;
+      color: var(--button-primary-text);
+      background-color: var(--button-primary-bg);
     }
 
     &:not(.active):not(:disabled):hover {
-      color: $text-accent;
+      color: var(--text-accent);
 
       & svg {
-        color: $text-accent;
+        color: var(--text-accent);
       }
     }
 
     &:disabled svg {
-      color: $text-secondary;
+      color: var(--text-secondary);
     }
 
     &.active:hover {
-      color: $button-primary-text-hover;
-      background-color: $button-primary-bg-hover;
+      color: var(--button-primary-text-hover);
+      background-color: var(--button-primary-bg-hover);
     }
+  }
+
+  & .ellipsis {
+    color: var(--text-primary);
   }
 }
 
 @media (max-width: $breakpoint-s) {
   .pagination {
     & .button {
-      padding: $space-xxs $space-xs;
-      font-size: $space-m;
+      padding: var(--space-xxs) var(--space-xs);
+      font-size: var(--space-m);
       line-height: 18px;
     }
 

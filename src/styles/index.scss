@@ -32,28 +32,29 @@ pre {
 }
 
 .content {
-  padding: 0 $space-xl;
+  padding: 0 var(--space-xl);
   height: 100%;
   min-height: 100%;
   width: 1285px;
 }
 
 .page {
-  padding: $space-xl 0;
+  padding: var(--space-xl) 0;
   width: 100%;
   flex: 1;
   display: flex;
   justify-content: center;
+  background-color: var(--bg-color);
 }
 
 @media (max-width: $breakpoint-s) {
-   .content {
+  .content {
     width: 100%;
   }
 }
 
 @media (max-width: $breakpoint-m) {
-   .content {
+  .content {
     width: 100%;
   }
 }

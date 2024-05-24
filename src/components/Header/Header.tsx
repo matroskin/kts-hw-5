@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Text from 'components/Text';
 import LogoIcon from 'components/icons/LogoIcon';
+import ThemeSwitcher from 'components/ThemeSwitcher';
 import LangSwitcher from 'components/LangSwitcher';
 import styles from './Header.module.scss';
 
@@ -20,7 +21,10 @@ const Header = () => {
           </Text>
         </Link>
 
-        <LangSwitcher />
+        <div className={styles.controls}>
+          <ThemeSwitcher />
+          <LangSwitcher />
+        </div>
       </div>
     </div>
   );

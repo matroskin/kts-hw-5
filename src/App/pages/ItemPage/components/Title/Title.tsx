@@ -27,7 +27,7 @@ const Title: React.FC<TitleProps> = ({ avatar, orgs, name }) => {
         <img src={avatar} className={styles.avatar} alt="avatar" />
       </Link>
 
-      <Text view="title" weight="bold">
+      <Text view="title" weight="bold" color="primary">
         {name}
       </Text>
     </div>

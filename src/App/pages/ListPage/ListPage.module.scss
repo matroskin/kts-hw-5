@@ -1,35 +1,35 @@
 @import "styles/variables";
 
 .container {
-  background-color: $bg-color;
+  background-color: var(--bg-color);
 }
 
 .list {
-  padding: $space-xl 0;
+  padding: var(--space-xl) 0;
   display: flex;
   flex-wrap: wrap;
   gap: 80px;
 }
 
 .loading {
-  padding: $space-xl 0;
+  padding: var(--space-xl) 0;
   display: flex;
   flex-wrap: wrap;
   gap: 80px;
 }
 
 .filter {
-  margin-top: $space-xl;
+  margin-top: var(--space-xl);
   width: 300px;
-  color: $text-secondary;
+  color: var(--text-secondary);
 }
 
 .search {
-  margin-top: $space-xl;
+  margin-top: var(--space-xl);
   width: 100%;
   display: flex;
   align-items: center;
-  gap: $space-s;
+  gap: var(--space-s);
 }
 
 .clear {
@@ -39,35 +39,35 @@
 }
 
 .link {
-  padding: $space-xxxs $space-xs;
-  border-radius: $border-radius;
-  color: $white;
-  background-color: $brand;
+  padding: var(--space-xxxs) var(--space-xs);
+  border-radius: var(--border-radius);
+  color: var(--white);
+  background-color: var(--brand);
   letter-spacing: 0.025em;
   cursor: pointer;
   transition: background-color 0.25s ease-in-out;
 
   &:hover {
-    background-color: $brand-hover;
+    background-color: var(--brand-hover);
   }
 }
 
 @media (max-width: $breakpoint-s) {
   .list {
-    gap: $space-xl;
+    gap: var(--space-xl);
   }
 
   .loading {
-    gap: $space-l;
+    gap: var(--space-l);
   }
 
   .filter {
-    margin-top: $space-m;
+    margin-top: var(--space-m);
     width: 100%;
   }
 
   .search {
-    margin-top: $space-s;
+    margin-top: var(--space-s);
     flex-direction: column;
 
     & button {
@@ -78,17 +78,17 @@
 
 @media (max-width: $breakpoint-m) {
   .list {
-    gap: $space-l;
+    gap: var(--space-l);
   }
 }
 
 @media (max-width: $breakpoint-xl) {
   .list {
-    gap: $space-l;
+    gap: var(--space-l);
     justify-content: center;
   }
 
   .loading {
-    gap: $space-l;
+    gap: var(--space-l);
   }
 }

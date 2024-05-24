@@ -3,13 +3,13 @@
 .languages {
   display: flex;
   flex-direction: column;
-  gap: $space-xxs;
+  gap: var(--space-xxs);
 
   & .title {
     font-weight: 600;
     font-size: 18px;
     line-height: 22px;
-    color: $black;
+    color: var(--text-primary);
   }
 
   & .progress {
@@ -37,7 +37,7 @@
     flex: 1 0 50%;
     display: flex;
     align-items: center;
-    gap: $space-xxs;
+    gap: var(--space-xxs);
     padding: 4px 0;
   }
 
@@ -53,7 +53,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    color: $black;
+    color: var(--text-primary);
   }
 
   & .percentage {
@@ -63,6 +63,6 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-    color: $text-secondary;
+    color: var(--text-secondary);
   }
 }

@@ -20,7 +20,7 @@ export type TextProps = {
 
 const Text: React.FC<TextProps> = ({ className, view, tag: Tag = 'p', weight, children, color, maxLines }) => {
   const classes =
-    `${className ?? ''} ${styles[`${view}`] ?? ''} ${styles[`${weight}`] ?? ''} ${color ? styles[`text-${color}`] : ''}`.trim();
+    `${className ?? ''}  ${styles[`${view}`] ?? ''} ${styles[`${weight}`] ?? ''} ${color ? styles[color] : ''}`.trim();
 
   return (
     <Tag

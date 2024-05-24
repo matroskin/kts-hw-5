@@ -1,7 +1,7 @@
 @import "styles/variables";
 
 .wrapper {
-  margin-top: $space-m;
+  margin-top: var(--space-m);
   position: relative;
 }
 
@@ -11,23 +11,23 @@
   right: 0;
   left: 0;
   z-index: 10;
-  margin-top: $space-xxs;
-  border-radius: $border-radius;
-  background: $dropdown-options-bg;
+  margin-top: var(--space-xxs);
+  border-radius: var(--border-radius);
+  background: var(--dropdown-options-bg);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .option {
   cursor: pointer;
-  padding: $space-s $space-xs;
+  padding: var(--space-s) var(--space-xs);
   height: 48px;
-  color: $text-primary;
+  color: var(--text-primary);
 }
 
 .option.selected {
-  color: $text-accent;
+  color: var(--text-accent);
 }
 
 .option:not(.selected):hover {
-  color: $text-secondary;
+  color: var(--text-secondary);
 }

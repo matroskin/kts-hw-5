@@ -1,29 +1,29 @@
 @import "styles/variables";
 
 .title {
-  margin-bottom: $space-m;
+  margin-bottom: var(--space-m);
   display: flex;
   align-items: center;
-  gap: $space-m;
+  gap: var(--space-m);
 
   & .back {
     cursor: pointer;
 
     svg {
       display: block;
-      color: $brand;
+      color: var(--brand);
     }
 
     &:hover {
       svg {
-        color: $brand-hover;
+        color: var(--brand-hover);
       }
     }
   }
 
   & .link {
     transition: opacity 0.25s ease-in-out;
-    
+
     & img {
       display: block;
     }

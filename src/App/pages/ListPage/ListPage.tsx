@@ -66,7 +66,7 @@ const ListPage: React.FC = () => {
   return (
     <div className={`page ${styles.container}`}>
       <div className={`content `}>
-        <Text className="center" view="title" tag="h1">
+        <Text className="center" view="title" tag="h1" color="primary">
           {t('List of organization repositories')}
         </Text>
 
@@ -116,7 +116,7 @@ const ListPage: React.FC = () => {
             {isNoResultsVisible && (
               <Text className="center" view="p-16" tag="p" color="secondary">
                 {t('Organization')}{' '}
-                <Text view="p-20" tag="span" weight="bold">
+                <Text view="p-20" tag="span" weight="bold" color="primary">
                   {query.orgsName}
                 </Text>{' '}
                 {t('No results')}
@@ -124,7 +124,7 @@ const ListPage: React.FC = () => {
             )}
 
             {!isNoResultsVisible && total === 0 && (
-              <Text view="p-20" tag="p" className={styles.clear}>
+              <Text view="p-20" tag="p" className={styles.clear} color="primary">
                 👆🏻 {t('Default name')}{' '}
                 <span onClick={handleSearch} className={styles.link}>
                   ktsstudio

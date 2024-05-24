@@ -3,7 +3,7 @@
 .info {
   display: flex;
   flex-direction: column;
-  gap: $space-l;
+  gap: var(--space-l);
 
   & .content {
     display: flex;
@@ -15,7 +15,7 @@
   .info {
     & .content {
       flex-direction: column;
-      gap: $space-xl;
+      gap: var(--space-xl);
     }
   }
 }
@@ -24,7 +24,7 @@
   .info {
     & .content {
       flex-direction: column;
-      gap: $space-xl;
+      gap: var(--space-xl);
     }
   }
 }
