@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 
 # Устанавливаем зависимости
-RUN yarn install
+RUN yarn install --production
 
 # Копируем остальные файлы проекта
 COPY . .
@@ -16,8 +16,5 @@ COPY . .
 # Компилируем проект для production-окружения
 RUN yarn build
 
-# Указываем порт, который будет прослушивать приложение
-EXPOSE 3000
-
 # Запуск production-сервера
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
