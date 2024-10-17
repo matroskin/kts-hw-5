@@ -1,41 +1,41 @@
-name: Build and deployment
-run-name: ${{ github.actor }} is deploying to server
+# name: Build and deployment
+# run-name: ${{ github.actor }} is deploying to server
 
-on:
-  push:
-    branches:
-      - hw-5
+# on:
+#   push:
+#     branches:
+#       - hw-5
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: npm
+#       - name: Setup node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20.x
+#           cache: npm
 
-      - name: Install
-        run: npm install
+#       - name: Install
+#         run: npm install
 
-      - name: Build project
-        env:
-          GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
-        run: yarn build
+#       - name: Build project
+#         env:
+#           GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+#         run: yarn build
 
-      - name: Deploy to Server
-        uses: easingthemes/ssh-deploy@main
-        env:
-          REMOTE_HOST: ${{ secrets.SERVER_HOST }}
-          REMOTE_USER: ${{ secrets.SERVER_USERNAME }}
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          REMOTE_PORT: ${{ secrets.SERVER_PORT }}
-          GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
-        with:
-          source: dist/
-          target: /var/www/github-client
+#       - name: Deploy to Server
+#         uses: easingthemes/ssh-deploy@main
+#         env:
+#           REMOTE_HOST: ${{ secrets.SERVER_HOST }}
+#           REMOTE_USER: ${{ secrets.SERVER_USERNAME }}
+#           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+#           REMOTE_PORT: ${{ secrets.SERVER_PORT }}
+#           GITHUB_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
+#         with:
+#           source: dist/
+#           target: /var/www/github-client
