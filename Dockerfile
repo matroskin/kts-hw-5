@@ -17,4 +17,4 @@ COPY . .
 RUN yarn build
 
 # Запуск production-сервера
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
