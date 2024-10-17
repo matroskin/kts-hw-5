@@ -1,0 +1,13 @@
+@import "styles/variables";
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}

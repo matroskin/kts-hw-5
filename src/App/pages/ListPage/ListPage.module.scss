@@ -1,0 +1,94 @@
+@import "styles/variables";
+
+.container {
+  background-color: var(--bg-color);
+}
+
+.list {
+  padding: var(--space-xl) 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 80px;
+}
+
+.loading {
+  padding: var(--space-xl) 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 80px;
+}
+
+.filter {
+  margin-top: var(--space-xl);
+  width: 300px;
+  color: var(--text-secondary);
+}
+
+.search {
+  margin-top: var(--space-xl);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.clear {
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+}
+
+.link {
+  padding: var(--space-xxxs) var(--space-xs);
+  border-radius: var(--border-radius);
+  color: var(--white);
+  background-color: var(--brand);
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition: background-color 0.25s ease-in-out;
+
+  &:hover {
+    background-color: var(--brand-hover);
+  }
+}
+
+@media (max-width: $breakpoint-s) {
+  .list {
+    gap: var(--space-xl);
+  }
+
+  .loading {
+    gap: var(--space-l);
+  }
+
+  .filter {
+    margin-top: var(--space-m);
+    width: 100%;
+  }
+
+  .search {
+    margin-top: var(--space-s);
+    flex-direction: column;
+
+    & button {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-m) {
+  .list {
+    gap: var(--space-l);
+  }
+}
+
+@media (max-width: $breakpoint-xl) {
+  .list {
+    gap: var(--space-l);
+    justify-content: center;
+  }
+
+  .loading {
+    gap: var(--space-l);
+  }
+}

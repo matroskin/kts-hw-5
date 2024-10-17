@@ -1,0 +1,68 @@
+@import "styles/variables";
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  & .button {
+    border-radius: var(--border-radius);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 14px;
+    border: none;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--text-primary);
+    background-color: transparent;
+    transition:
+      color 0.25s ease-in-out,
+      background-color 0.25s ease-in-out;
+    cursor: pointer;
+
+    &.active {
+      color: var(--button-primary-text);
+      background-color: var(--button-primary-bg);
+    }
+
+    &:not(.active):not(:disabled):hover {
+      color: var(--text-accent);
+
+      & svg {
+        color: var(--text-accent);
+      }
+    }
+
+    &:disabled svg {
+      color: var(--text-secondary);
+    }
+
+    &.active:hover {
+      color: var(--button-primary-text-hover);
+      background-color: var(--button-primary-bg-hover);
+    }
+  }
+
+  & .ellipsis {
+    color: var(--text-primary);
+  }
+}
+
+@media (max-width: $breakpoint-s) {
+  .pagination {
+    & .button {
+      padding: var(--space-xxs) var(--space-xs);
+      font-size: var(--space-m);
+      line-height: 18px;
+    }
+
+    & svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

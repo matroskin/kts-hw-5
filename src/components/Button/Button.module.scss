@@ -1,0 +1,35 @@
+@import "styles/variables";
+
+.button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-s) var(--space-l);
+  gap: var(--space-xxs);
+  border-radius: var(--border-radius);
+
+  color: var(--button-primary-text);
+  background-color: var(--button-primary-bg);
+  transition: background-color 0.25s ease-in-out;
+
+  &:not(.loading):not(:disabled):hover {
+    color: var(--button-primary-text-hover);
+    background-color: var(--button-primary-bg-hover);
+  }
+
+  &:disabled {
+    color: var(--button-primary-text-disabled);
+    background-color: var(--button-primary-bg-disabled);
+    cursor: default;
+  }
+
+  &:active:not(:disabled) {
+    color: var(--button-primary-text-active);
+    background-color: var(--button-primary-bg-active);
+  }
+}

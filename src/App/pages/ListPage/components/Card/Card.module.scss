@@ -1,0 +1,117 @@
+@import "styles/variables";
+
+.card {
+  width: 348px;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 0px var(--space-xl);
+  gap: var(--space-xl);
+  background-color: var(--card-bg);
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  .image {
+    width: 348px;
+    height: 348px;
+    background-color: var(--card-image-bg);
+    object-fit: cover;
+  }
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px var(--space-xs);
+    gap: var(--space-l);
+  }
+
+  & .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0px;
+    gap: var(--space-xxs);
+  }
+
+  & .top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: var(--space-xl);
+  }
+
+  & .bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+
+    & p {
+      -webkit-line-clamp: 3;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  & .star {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-xxs);
+  }
+}
+
+@media (max-width: $breakpoint-m) {
+  .card {
+    padding: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    min-height: auto;
+    gap: var(--space-m);
+
+    & .image {
+      width: 120px;
+      height: 120px;
+    }
+
+    & .content {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    & .content {
+      padding: var(--space-m);
+      gap: var(--space-l);
+    }
+
+    & .bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xxs);
+
+      & p {
+        -webkit-line-clamp: 1;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    & .top {
+      gap: var(--space-xxs);
+      order: 2;
+    }
+  }
+}

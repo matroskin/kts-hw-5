@@ -1,0 +1,67 @@
+@import "styles/variables";
+
+.button {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.title {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 48px;
+}
+
+.p-20 {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.p-18 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.p-16 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.p-14 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.primary {
+  color: var(--text-primary);
+}
+
+.secondary {
+  color: var(--text-secondary);
+}
+
+.accent {
+  color: var(--text-accent);
+}
+
+.normal {
+  font-weight: 400;
+}
+
+.medium {
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+@media (max-width: $breakpoint-s) {
+  .title {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}

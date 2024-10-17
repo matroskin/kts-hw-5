@@ -1,0 +1,128 @@
+:root {
+  --white: #fff;
+  --black: #000;
+  --gray: #d9d9d9;
+  --bg-color: #f6f8fa;
+
+  --border-radius: 6px;
+  --brand: #454cee;
+  --brand-hover: rgba(69, 76, 238, 0.7);
+  --brand-active: #26325c;
+  --space-xl: 24px;
+  --space-l: 20px;
+  --space-m: 16px;
+  --space-s: 14px;
+  --space-xs: 12px;
+  --space-xxs: 8px;
+  --space-xxxs: 4px;
+
+  --loader-bg: var(--brand);
+
+  --text-primary: var(--black);
+  --text-secondary: #afadb5;
+  --text-accent: var(--brand);
+
+  --button-primary-bg: var(--brand);
+  --button-primary-text: var(--white);
+  --button-primary-bg-hover: var(--brand-hover);
+  --button-primary-text-hover: var(--white);
+  --button-primary-bg-disabled: var(--gray);
+  --button-primary-text-disabled: var(--white);
+  --button-primary-bg-active: var(--brand-active);
+  --button-primary-text-active: var(--white);
+
+  --card-image-bg: var(--gray);
+  --card-bg: var(--white);
+
+  --input-text: var(--black);
+  --input-bg: var(--white);
+  --input-placeholder: #afadb5;
+  --input-border: var(--white);
+  --input-bg-focus: var(--white);
+  --input-border-focus: var(--brand);
+  --input-text-focus: var(--black);
+  --input-bg-disabled: var(--white);
+  --input-border-disabled: var(--white);
+  --input-text-disabled: rgba(0, 0, 0, 0.2);
+
+  --checkbox-bg: var(--white);
+  --checkbox-border: var(--white);
+  --checkbox-bg-hover: var(--white);
+  --checkbox-border-hover: var(--brand);
+  --checkbox-bg-disabled: rgba(255, 255, 255, 0.5);
+  --checkbox-border-disabled: rgba(255, 255, 255, 0);
+  --checkbox-check: var(--brand);
+  --checkbox-check-hover: var(--brand);
+  --checkbox-check-disabled: rgba(0, 0, 0, 0.2);
+
+  --dropdown-options-bg: var(--white);
+
+  --link-color: #0080ff;
+  --link-color-hover: #0969da;
+
+  --topic-bg: #daedff;
+  --topic-color: #0066cc;
+  --topic-bg-hover: #0969da;
+}
+
+.dark {
+  --white: #e2e2e2;
+  --black: #000;
+  --gray: #555;
+  --bg-color: #222;
+
+  --brand: #6a5acd;
+  --brand-hover: rgba(106, 90, 205, 0.7);
+  --brand-active: #483d8b;
+
+  --text-primary: var(--white);
+  --text-secondary: #afadb5;
+  --text-accent: var(--brand);
+
+  --button-primary-bg: var(--brand);
+  --button-primary-text: var(--white);
+  --button-primary-bg-hover: var(--brand-hover);
+  --button-primary-text-hover: var(--white);
+  --button-primary-bg-disabled: var(--gray);
+  --button-primary-text-disabled: var(--white);
+  --button-primary-bg-active: var(--brand-active);
+  --button-primary-text-active: var(--white);
+
+  --card-image-bg: var(--gray);
+  --card-bg: var(--gray);
+
+  --input-text: var(--white);
+  --input-bg: var(--bg-color);
+  --input-placeholder: #666;
+  --input-border: var(--white);
+  --input-bg-focus: var(--bg-color);
+  --input-border-focus: var(--brand);
+  --input-text-focus: var(--white);
+  --input-bg-disabled: var(--bg-color);
+  --input-border-disabled: var(--bg-color);
+  --input-text-disabled: rgba(255, 255, 255, 0.5);
+
+  --checkbox-bg: var(--bg-color);
+  --checkbox-border: var(--bg-color);
+  --checkbox-bg-hover: var(--bg-color);
+  --checkbox-border-hover: var(--brand);
+  --checkbox-bg-disabled: rgba(0, 0, 0, 0.5);
+  --checkbox-border-disabled: rgba(0, 0, 0, 0);
+  --checkbox-check: var(--brand);
+  --checkbox-check-hover: var(--brand);
+  --checkbox-check-disabled: rgba(255, 255, 255, 0.5);
+
+  --dropdown-options-bg: var(--bg-color);
+
+  --link-color: #6495ed;
+  --link-color-hover: #4682b4;
+
+  --topic-bg: #483d8b;
+  --topic-color: #fff;
+  --topic-bg-hover: #6a5acd;
+}
+
+$breakpoint-s: 480px;
+$breakpoint-m: 768px;
+$breakpoint-l: 1024px;
+$breakpoint-xl: 1250px;

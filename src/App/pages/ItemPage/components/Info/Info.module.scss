@@ -1,0 +1,30 @@
+@import "styles/variables";
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+
+  & .content {
+    display: flex;
+    gap: 80px;
+  }
+}
+
+@media (max-width: $breakpoint-s) {
+  .info {
+    & .content {
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+  }
+}
+
+@media (max-width: $breakpoint-m) {
+  .info {
+    & .content {
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+  }
+}
